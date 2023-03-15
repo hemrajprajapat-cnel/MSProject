@@ -1,0 +1,52 @@
+#navbar-brand a{
+    text-decoration: none !important;
+} 
+
+.logo_brand{
+    font-weight: 900;
+    text-transform: capitalize;
+    font-size: 19px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    color: #284edf;
+} 
+
+.nav_login{
+    color: #284edf;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 8px 15px !important;
+}
+.nav_login:hover{
+    color: #284edf !important;    
+}
+
+.nav_search{
+    width: 50%;
+    margin-top: 0.5rem;
+}
+
+.nav_search .search_filter{
+    background-color: #fff;
+}
+
+@media only screen and (max-width: 991px){
+
+    /* For Collapse Navbar */
+    .sidebar-collapse .navbar-collapse {
+        display: table !important;
+    }
+    
+    .sidebar-collapse .navbar .navbar-nav {
+        margin: 1rem 1rem 0;
+    }
+
+    .nav_search{
+        width: 90%;
+    }
+
+    .sidebar-collapse .navbar-collapse .navbar-nav:not(.navbar-logo) .nav-link {
+        margin: 0;
+    }
+}

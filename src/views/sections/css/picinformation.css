@@ -1,0 +1,53 @@
+.picinfo_container {
+    background-color: #edefff;
+    background-size: cover;
+    padding: 1rem;
+    width: 100%;
+    height: auto;
+}
+
+.picinfo_container .heading h4{
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+.picinfo_container .heading p{
+    font-weight: 500;
+}
+
+.picinfo_container .form_content {
+    border: 2px dotted #dbdbdb;
+    padding: 1rem;
+}
+
+.picinfo_container .inner {
+    padding: 1rem;
+}
+
+.picinfo_container .inner h5{
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: 15px;
+}
+
+.picinfo_container .inner_center {
+    border-left: 1px solid #dbdbdb;
+    border-right: 1px solid #dbdbdb;
+}
+
+.picinfo_container .form_content select,
+.picinfo_container .form_content input {
+    background-color: #fff;
+} 
+
+.picinfo_container .picinfo_submit{
+    background-color: #0d0df8;
+    font-size: large;
+    font-weight: 700;
+}
+
+@media only screen and (max-width: 768px){
+    .picinfo_container .inner_center {
+        border: 0;
+    }
+}

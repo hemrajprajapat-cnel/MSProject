@@ -1,0 +1,137 @@
+.slot_tabs .inner {
+  display: flex;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.slot_tabs .inner button {
+  margin: 3px;
+  color: #357ef6;
+  border: 2px solid #357ef6;
+  padding: 7px 10px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  background-color: #fff !important;
+}
+
+
+.slot_tabs .active{
+  color: white !important;
+  border: transparent !important;
+  background-image: linear-gradient(to left, #357ef6, #2f6def, #2b63ea, #2859e5, #284edf);
+}
+
+
+.slot_tabs .filter {
+  color: white !important;
+  background-image: linear-gradient(to left, #357ef6, #2f6def, #2b63ea, #2859e5, #284edf);
+}
+
+.slot_tabs button:hover {
+  border-color: transparent;
+  color: white;
+  background-image: linear-gradient(to left, #2f6def, #2b63ea, #2859e5);
+}
+
+.slote_card img {
+  width: 100%;
+}
+
+
+/* Filter Box */
+.filter_section {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  background-color: #FFFFFF;
+  width: 300px;
+  min-height: 100vh;
+  height: auto;
+  z-index: 1050;
+  border: 2px solid #0082FF;
+  padding: 10px;
+  transition: .3s;
+}
+
+.open-list {
+  right: 0;
+}
+
+.filter_section i#closeFilterList {
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(to left, #357ef6, #2f6def, #2b63ea, #2859e5, #284edf);
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 20px;
+  margin: 10px 10px 10px 90%;
+  cursor: pointer;
+}
+
+.filter_section h6 {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1A49E5;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 3px;
+}
+
+.filter_section h5 {
+  color: #000;
+  font-size: 12px;
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.filter_section h5 i {
+  font-size: 16px;
+  position: relative;
+  top: 2px;
+  left: 5px;
+}
+
+.filterInner::-webkit-scrollbar {
+  display: none;
+  padding-bottom: 70px;
+}
+
+.filterInner {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+  padding-bottom: 70px;
+}
+
+/* pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 50
+}
+
+.pagination button,
+.paginationButton {
+  border: none;
+  background: none;
+  padding: 5px 7px;
+  border: 1px solid #3880F7;
+  border-radius: 4px;
+  margin: 1px;
+  color: #2748DC;
+  font-weight: 600;
+}
+
+@media only screen and (min-width: 450px) {
+  .pagination button,
+  .paginationButton {
+    padding: 7px 10px;
+    margin: 3px;
+  }
+}

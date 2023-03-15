@@ -1,0 +1,58 @@
+.banner_heading h1 {
+    font-weight: 900;
+    /* margin-bottom: 0px; */
+}
+
+.banner_content{
+    display: flex;
+    justify-content: start;
+    position: relative;
+    top: 70%;
+    width: 100%;
+    background-image: linear-gradient(to right top, #357ef6, #2f6def, #2b63ea, #2859e5, #284edf);
+    padding: 1rem;
+    border-radius: 15px;
+}
+
+.banner_content2 {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: 70%;
+    width: 100%;
+    padding: 1rem;
+    border-radius: 15px;
+}
+.banner_content a,
+.banner_content2 a{
+    color: #fff !important;
+    text-decoration: none;
+}
+
+.banner_content2 .lessCategory {
+    min-width: 120px;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0.5rem;
+    padding: 1rem;
+    background-image: linear-gradient(to right top, #357ef6, #2f6def, #2b63ea, #2859e5, #284edf);
+    border-radius: 20px;
+}
+.banner_content .banner_description{
+    margin-right: 1rem;
+}
+.banner_content2,.banner_description i,
+.banner_content .banner_description i{
+    font-size: 30px;
+    cursor: pointer;
+}
+.banner_content2,.banner_description p,
+.banner_content .banner_description p{
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+    margin-top: 5px; 
+    cursor: pointer;
+}

@@ -1,0 +1,86 @@
+/* Used in navber and slider both */
+.container_fluid_hwe{
+    max-width: 100%;
+    /* padding: 0px 20px; */
+}
+
+
+/* Crousel Content */
+.carousel_content .carousel_title{
+    color: #284edf;
+    margin: 0;
+    font-weight: 700;
+}
+
+.carousel_content .show_more{
+    background-color: #284edf;
+    font-weight: 700;
+    border-radius: 15px;
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+width: 100%;
+margin-bottom: 10px;
+}
+
+.swiper-slide img {
+display: block;
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+
+.carousel_content .inner{
+display: flex;
+align-items: center;
+}
+
+.slider_card .card-body{
+padding: 0.5rem;
+border: 1px solid #2748DC;
+border-top: none;
+}
+
+.slider_card .card-body .card-title{
+color: #2748DC;
+margin-bottom: 8px;
+font-size: 16px;
+font-weight: 700;
+}
+
+.slider_card .card-body .card-subtitle{
+color: #3880F7;
+font-size: 14px;
+font-weight: 400;
+}
+
+.carousel_content .swiper-button-prev,
+.carousel_content .swiper-button-next {
+position: absolute;
+top: 100px;
+color: #fff;
+}
+
+.carousel_content .horizontal_line {
+border-color: #2748DC;
+}
+  
+  .swiper-button-next::after,
+  .swiper-button-prev::after {
+      font-size: 17px;
+      background: #2748DC;
+      font-weight: 900;
+      padding: 8px 12px;
+      border-radius: 50%;
+  }
+
+
+
+
+
