@@ -18,22 +18,26 @@ import {
 
 // Custome Style
 import "./css/contentstyle.css";
+import "./css/loader.css";
 
 function CarouselSection() {
 
   // Popular Game List
   const [popularGame, setPopularGame] = useState([]);
+  const [loaderdisable, setLoaderDisable] = useState();
+
+
   useEffect(() => {
     fetch(`${CONSTANT.BaseUrl}mycasino/POPULARITY`,{
       method: 'GET',
     })
     .then((res) => res.json())
     .then((json) => {
-      setPopularGame(json.items);
+      setPopularGame(json.items);      
     })
     .catch((error) => {
       console.log(error)
-    })
+    })    
   },[])
 
 
@@ -45,17 +49,20 @@ function CarouselSection() {
     })
     .then((res) => res.json())
     .then((json) => {
-      setNewGame(json.items);
+      setNewGame(json.items); 
     })
     .catch((error) => {
-      console.log(error)
+      console.log(error)      
     })
   },[])
 
-  const SlideItems = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  setTimeout(() => {
+    setLoaderDisable("loaderDisable")
+  }, 3000);
 
   return (
     <>
+      <div class={"loading " + loaderdisable}>Loading&#8230;</div>
       <Container className="container_fluid_hwe carousel_content">
         <Row className="mb-3 inner">
           <Col xs="6">

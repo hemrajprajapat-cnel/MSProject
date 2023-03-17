@@ -15,11 +15,15 @@ import {
 } from "reactstrap";
 // Custome Css
 import "../sections/css/Slot.css";
+import "./css/loader.css";
 
 function Slots() {
 
   // List Data
   const [gamelist, setGamelist] = React.useState();
+
+  // Disable Loader
+  const [loaderdisable, setLoaderDisable] = useState();
 
   // filter Data
   const [filterList, setFilterList] = React.useState();
@@ -76,8 +80,15 @@ function Slots() {
         setlast_page(json.game_list.pagination.last_page);
         setcurrent_page(json.game_list.pagination.current_page);
         settotal_rows(json.game_list.pagination.total_rows);
-      });
+      })
+      .catch((error) => {
+        console.log(error)       
+      })     
   };
+
+  setTimeout(() => {
+    setLoaderDisable("loaderDisable")
+  }, 3000);
 
   // Onload And also onchange
   React.useEffect(() => {
@@ -123,11 +134,11 @@ function Slots() {
   }
   function providerValue(provider) {
     setprovider(provider)
-    // getGameList();
+    getGameList();
   }
   function game_typeValue(game_type) {
     setgame_type(game_type)
-    // getGameList();
+    getGameList();
   }
   function currencyValue(currency) {
     setcurrency(currency)
@@ -157,6 +168,7 @@ function Slots() {
 
   return (
     <>
+      <div class={"loading " + loaderdisable}>Loading&#8230;</div>
       <Navbar />
       <div className="wrapper">
         <Header />

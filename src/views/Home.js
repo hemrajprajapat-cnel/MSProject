@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 // core components
 import Navbar from "components/Navbars/Navbar.js";
@@ -18,18 +18,18 @@ function Home() {
     return function cleanup() {
       document.body.classList.remove("index-page");
       document.body.classList.remove("sidebar-collapse");
-    };  
-  });  
+    };
+  });
 
   return (
-    <>
+    <>      
       <Navbar />
       <div className="wrapper">
         <Header />
         <div className="main">
-        {
-        <Lobby /> 
-        }          
+          {
+            <Lobby />
+          }
         </div>
         {/* <Footer /> */}
       </div>
