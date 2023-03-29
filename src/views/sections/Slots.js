@@ -5,25 +5,28 @@ import * as CONSTANT from '../../BaseURL';
 import MyPagination from 'components/MyPagination.js'
 import $ from 'jquery';
 import {
+  Nav,
   Row,
   Col,
   Button,
   Card,
+  CardHeader,
   CardBody,
   CardTitle,
   CardSubtitle,
 } from "reactstrap";
 // Custome Css
-import "../sections/css/Slot.css";
+import "../sections/css/slot.css";
 import "./css/loader.css";
 
 function Slots() {
 
   // List Data
-  const [gamelist, setGamelist] = React.useState();
+  const [gamelist, setGamelist] = React.useState("");
+  const [gameLength, setGameLength] = useState();
 
   // Disable Loader
-  const [loaderdisable, setLoaderDisable] = useState();
+  const [loaderdisable, setLoaderDisable] = useState("loaderDisable");
 
   // filter Data
   const [filterList, setFilterList] = React.useState();
@@ -44,12 +47,6 @@ function Slots() {
   const [theme, settheme] = useState([]);
   const [volatility, setvolatility] = useState([]);
 
-
-  // get data from child to parent
-  function callBack(childData) {
-    setcurrent_page(childData);
-  }
-
   // function for open filter list
   const OpenfilterList = () => {
     let list = document.getElementById("filter_section");
@@ -63,6 +60,7 @@ function Slots() {
     let list = document.getElementById("filter_section");
     list.classList.remove("open-list");
   };
+
   const getGameList = () => {
     fetch(`${CONSTANT.BaseUrl}category/SLOT?sortBy=${sortBy}&provider=${provider}&game_type=${game_type}&currency=${currency}&feature=${feature}&theme=${theme}&volatility=${volatility}&page=${current_page ? current_page : 1}`, {
       method: "GET",
@@ -76,19 +74,19 @@ function Slots() {
         setGamelist(json.game_list.items);
         setFilterList(json.filter_list);
 
+        setLoaderDisable("loaderDisable")
+
+        setGameLength(json.game_list.items.length)
+
         setfirst_page(json.game_list.pagination.first_page);
         setlast_page(json.game_list.pagination.last_page);
         setcurrent_page(json.game_list.pagination.current_page);
         settotal_rows(json.game_list.pagination.total_rows);
       })
       .catch((error) => {
-        console.log(error)       
-      })     
+        console.log(error)
+      })
   };
-
-  setTimeout(() => {
-    setLoaderDisable("loaderDisable")
-  }, 3000);
 
   // Onload And also onchange
   React.useEffect(() => {
@@ -101,9 +99,14 @@ function Slots() {
     return function cleanup() {
       document.body.classList.remove("index-page");
       document.body.classList.remove("sidebar-collapse");
-    };    
+    };
   }, [sortBy, current_page, provider, game_type, currency, feature, theme, volatility]);
 
+
+  // get data from child to parent
+  function callBack(childData) {
+    setcurrent_page(childData);
+  }
 
   // For Pagination
   function pageDecrease() {
@@ -123,22 +126,23 @@ function Slots() {
 
   // For Filter Data
   function sortByValue(index) {
-    if(index == 1){
+    setLoaderDisable("")
+    if (index == 1) {
       setsortBy("new");
-    }else if(index == 2){
-      setsortBy("popularity");       
-    }else if(index == 3){
+    } else if (index == 2) {
+      setsortBy("popularity");
+    } else if (index == 3) {
       setsortBy("alphabetical");
     }
     // getGameList();
   }
   function providerValue(provider) {
     setprovider(provider)
-    getGameList();
+    // getGameList();
   }
   function game_typeValue(game_type) {
     setgame_type(game_type)
-    getGameList();
+    // getGameList();
   }
   function currencyValue(currency) {
     setcurrency(currency)
@@ -159,8 +163,8 @@ function Slots() {
 
 
   // For ShortBy Button
-  $(document).ready(function(){
-    $(".slot_tabs > .inner1 > button").click(function(){      
+  $(document).ready(function () {
+    $(".slot_tabs > .inner1 > button").click(function () {
       $(".slot_tabs > .inner1 > button").removeClass("active");
       $(this).addClass("active");
     });
@@ -172,7 +176,7 @@ function Slots() {
       <Navbar />
       <div className="wrapper">
         <Header />
-        <div className="main">
+        <div className="main main_slot">
           <div className="container-fluid">
             <Row className="justify-content-center flex-wrap slot_tabs">
               <Col lg="2" className="inner"></Col>
@@ -189,10 +193,10 @@ function Slots() {
               </Col>
               <Col
                 lg="2"
-                className="justify-content-end inner mt-3 position-relative"
+                className="justify-content-end inner position-relative"
               >
                 <Button
-                  className="filter"
+                  className="filter mt-3"
                   type="button"
                   onClick={OpenfilterList}
                 >
@@ -264,34 +268,49 @@ function Slots() {
               </Col>
             </Row>
 
-            <Row className="justify-content-start flex-wrap mt-5">
-              {gamelist?.map((item) => {
-                return (
-                  <Col sm="6" md="4" lg='3' className="">
-                    <Card className="slider_card slote_card">
-                      <img
-                        alt="..."
-                        className="Slider Image..."
-                        src={require("../../assets/img/slider_img.png")}
-                      />
-                      <CardBody>
-                        <CardTitle tag="h5">{item.game_name}</CardTitle>
-                        <CardSubtitle className="mb-2" tag="p">
-                          {item.provider_code}
-                        </CardSubtitle>
-                        <CardSubtitle className="mb-2" tag="p">
-                          {item.game_type}
-                        </CardSubtitle>
-                      </CardBody>
-                    </Card>
-                  </Col>  
-                );              
-              })}
+            <Row>
+              <Col md="12" style={{ textAlign: "center", margin: "0.5rem 0px 0px", fontSize: "17px" }}>
+                <h6 style={{ textTransform: "capitalize" }}>{gameLength} games</h6>
+              </Col>
+            </Row>
+
+            <Row className="justify-content-start flex-wrap slot_gamelist">
+              {gamelist != "" ?
+                gamelist.map((item) => {
+                  return (
+                    <Col md="3" sm="6" xs="6" id="unic_card_hwe">
+                      <Card className="slote_card">
+                        <CardHeader>
+                          <img
+                            alt="Image Not Found"
+                            src={item.game_img ? CONSTANT.ImageUrl + item.game_img : require("../../assets/img/No_Image_Available.jpg")}
+                          />
+                        </CardHeader>
+                        <CardBody>
+                          <CardTitle tag="h5">{item.game_name}</CardTitle>
+                          <CardSubtitle className="mb-2" tag="p">
+                            {item.provider_code}
+                          </CardSubtitle>
+                          <CardSubtitle className="mb-2" tag="p">
+                            {item.game_type}
+                          </CardSubtitle>
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  );
+                })
+                : <Nav className="Not_found mt-4 mb-4">
+                  <img
+                    alt="Image Not Found"
+                    src={require("../../assets/img/data_not_found.png")}
+                  />
+                </Nav>
+              }
             </Row>
           </div>
         </div>
       </div>
-      <div className='pagination'>
+      <div className={`pagination mt-2 ${gamelist == "" ? "slote_pagination" : ""}`}>
         <button onClick={pageDecrease}>Prev</button>
         <MyPagination totalItem={total_rows} itemPerPage={itemPerPage} handleCallBack={callBack} />
         <button onClick={pageIncrease}>Next</button>

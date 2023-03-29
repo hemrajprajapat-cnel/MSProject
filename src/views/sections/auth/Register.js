@@ -23,9 +23,6 @@ import "../css/register.css";
 // core components
 
 function SignUp() {
-  const [firstFocus, setFirstFocus] = React.useState(false);
-  const [lastFocus, setLastFocus] = React.useState(false);
-  const [emailFocus, setEmailFocus] = React.useState(false);
   return (
     <>
       <div className="section section-signup register_container">

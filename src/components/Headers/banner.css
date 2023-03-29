@@ -1,6 +1,14 @@
+@font-face {
+    font-family: "poligon bold";
+    src: url("../../assets/fonts/poligon/Poligon-Bold.otf");
+}
+
+
 .banner_heading h1 {
-    font-weight: 900;
-    /* margin-bottom: 0px; */
+	font-weight: 900;
+	font-size: 30px;
+	margin-bottom: 0px; 
+    font-family: "poligon bold";
 }
 
 .banner_content{
@@ -9,7 +17,7 @@
     position: relative;
     top: 70%;
     width: 100%;
-    background-image: linear-gradient(to right top, #357ef6, #2f6def, #2b63ea, #2859e5, #284edf);
+    background-image: linear-gradient(to bottom top, #0082ff, #0075fa, #0067f4, #0258ed, #1a49e5);
     padding: 1rem;
     border-radius: 15px;
 }
@@ -37,17 +45,20 @@
     justify-content: center;
     margin: 0 0.5rem;
     padding: 1rem;
-    background-image: linear-gradient(to right top, #357ef6, #2f6def, #2b63ea, #2859e5, #284edf);
+    background-image: linear-gradient(to bottom, #0082ff, #0075fa, #0067f4, #0258ed, #1a49e5);
     border-radius: 20px;
 }
+
 .banner_content .banner_description{
     margin-right: 1rem;
 }
+
 .banner_content2,.banner_description i,
 .banner_content .banner_description i{
     font-size: 30px;
     cursor: pointer;
 }
+
 .banner_content2,.banner_description p,
 .banner_content .banner_description p{
     font-size: 18px;
@@ -55,4 +66,22 @@
     margin: 0;
     margin-top: 5px; 
     cursor: pointer;
+}
+
+@media only screen and (max-width: 767px){
+    .banner_content2 .lessCategory {
+        min-width: 90px;
+        min-height: 90px;
+        border-radius: 15px;
+    }
+
+    .banner_content .banner_description i,
+    .banner_content2,.banner_description i {
+        font-size: 25px;
+    }
+
+    .banner_content .banner_description p,
+    .banner_content2 .banner_description p {   
+        font-size: 12px;
+    }
 }

@@ -2403,7 +2403,7 @@ fieldset[disabled] .btn-link.active {
 }
 .has-success:after,
 .has-danger:after {
-  font-family: "Nucleo Outline";
+  -family: "Nucleo Outline";
   content: "\ea22";
   display: inline-block;
   position: absolute;

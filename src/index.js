@@ -24,8 +24,10 @@ import "assets/css/bootstrap.min.css";
 import "assets/scss/now-ui-kit.scss?v=1.5.0";
 import "assets/demo/demo.css?v=1.5.0";
 import "assets/demo/nucleo-icons-page-styles.css?v=1.5.0";
+
 // pages for this kit
 import Home from "views/Home.js";
+import Captcha from "views/sections/auth/Captcha.js";
 import Register from "views/sections/auth/Register.js";
 import Login from "views/sections/auth/Login.js";
 import PicInformation from "views/sections/auth/PicInformation.js";
@@ -33,14 +35,24 @@ import Transactionmethod from "views/sections/auth/Transactionmethod.js";
 import Provider from "views/sections/auth/Provider.js";
 import ForgotPassword from "views/sections/auth/forgotpassword.js";
 import Slot from "views/sections/Slots.js";
+import EvolutionList from "views/sections/ProviderList.js";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(
+  document.getElementById("root")
+);
 
 root.render(
   <BrowserRouter>
     <Switch>
       <Switch>
-        <Route path="/HOME" render={(props) => <Home {...props} />} />
+        <Route 
+          path="/MYCASINO" 
+          render={(props) => <Home {...props} />} 
+        />
+        <Route
+          path="/captcha"
+          render={(props) => <Captcha {...props} />}
+        />
         <Route
           path="/register"
           render={(props) => <Register {...props} />}
@@ -69,8 +81,12 @@ root.render(
           path="/SLOT"
           render={(props) => <Slot {...props} />}
         />
-        <Redirect to="/HOME" />
-        <Redirect from="/" to="/HOME" />
+        <Route
+          path="/providerList"
+          render={(props) => <EvolutionList {...props} />}
+        />
+        <Redirect to="/captcha" />
+        <Redirect from="/" to="/captcha" />
       </Switch>
     </Switch>
   </BrowserRouter>

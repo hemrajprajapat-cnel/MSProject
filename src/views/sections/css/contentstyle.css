@@ -1,21 +1,25 @@
 /* Used in navber and slider both */
-.container_fluid_hwe{
+.container_fluid_hwe {
     max-width: 100%;
-    /* padding: 0px 20px; */
 }
 
 
 /* Crousel Content */
-.carousel_content .carousel_title{
+.carousel_content_lobby {
+    padding-top: 70px;
+}
+
+.carousel_content .carousel_title {
     color: #284edf;
     margin: 0;
     font-weight: 700;
+    font-size: 1.3em;
 }
 
-.carousel_content .show_more{
-    background-color: #284edf;
+.carousel_content .show_more {
+    background-image: linear-gradient(to right, #1a49e5, #0258ed, #0067f4, #0075fa, #0082ff);
     font-weight: 700;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 .swiper {
@@ -24,63 +28,115 @@
 }
 
 .swiper-slide {
-width: 100%;
-margin-bottom: 10px;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 .swiper-slide img {
-display: block;
-width: 100%;
-height: 100%;
-object-fit: cover;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-
-.carousel_content .inner{
-display: flex;
-align-items: center;
+.carousel_content .inner {
+    display: flex;
+    align-items: center;
 }
 
-.slider_card .card-body{
-padding: 0.5rem;
-border: 1px solid #2748DC;
-border-top: none;
+.slider_card{
+    margin-bottom: unset;
 }
 
-.slider_card .card-body .card-title{
-color: #2748DC;
-margin-bottom: 8px;
-font-size: 16px;
-font-weight: 700;
+.carousel_content .horizontal_line{
+    margin: unset;
 }
 
-.slider_card .card-body .card-subtitle{
-color: #3880F7;
-font-size: 14px;
-font-weight: 400;
+.slider_card .card-header {
+    height: 150px;
+    border: 1px solid;
+}
+
+.slider_card img {
+    width: 100%;
+    height: 100%;
+}
+
+.slider_card .card-body {
+    padding: 0.5rem;
+    border: 1px solid #2748DC;
+    border-top: none;
+}
+
+.slider_card .card-body .card-title {
+    color: #2748DC;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.slider_card .card-body .card-subtitle {
+    color: #3880F7;
+    font-size: 14px;
+    font-weight: 400;
 }
 
 .carousel_content .swiper-button-prev,
 .carousel_content .swiper-button-next {
-position: absolute;
-top: 100px;
-color: #fff;
+    position: absolute;
+    top: 100px;
+    color: #fff;
 }
 
 .carousel_content .horizontal_line {
-border-color: #2748DC;
+    border-color: #2748DC;
 }
-  
-  .swiper-button-next::after,
-  .swiper-button-prev::after {
-      font-size: 17px;
-      background: #2748DC;
-      font-weight: 900;
-      padding: 8px 12px;
-      border-radius: 50%;
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 17px;
+    background: #2748DC;
+    font-weight: 900;
+    padding: 8px 12px;
+    border-radius: 50%;
+}
+
+.lobby_data_Not_found {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 4rem 0;
   }
+  
 
+@media only screen and (max-width: 450px){
 
+    .carousel_content_lobby {
+        padding-top: 70px;
+    }
 
+    .container_fluid_hwe .inner{
+        margin-bottom: 0.5rem !important;
+    }
 
+    .carousel_content .show_more {
+        font-size: 0.75em;
+    }
 
+    .slider_card .card-header {
+        height: 80px;
+    }  
+
+    .slider_card .card-body {
+        height: 110px;
+    }  
+
+    .swiper-button-next::after, .swiper-button-prev::after {
+        font-size: 10px;
+    }
+
+    .swiperslide_hwe {
+        width: 180px !important;
+        margin-bottom: 0px;
+    }
+}

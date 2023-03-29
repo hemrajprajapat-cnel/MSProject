@@ -11,6 +11,7 @@ import {
   Col,
   Button,
   Card,
+  CardHeader,
   CardBody,
   CardTitle,
   CardSubtitle,
@@ -28,42 +29,39 @@ function CarouselSection() {
 
 
   useEffect(() => {
-    fetch(`${CONSTANT.BaseUrl}mycasino/POPULARITY`,{
+    fetch(`${CONSTANT.BaseUrl}mycasino/POPULARITY`, {
       method: 'GET',
     })
-    .then((res) => res.json())
-    .then((json) => {
-      setPopularGame(json.items);      
-    })
-    .catch((error) => {
-      console.log(error)
-    })    
-  },[])
+      .then((res) => res.json())
+      .then((json) => {
+        setPopularGame(json.items);
+        setLoaderDisable("loaderDisable")
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
 
 
   // New Game List
   const [newGame, setNewGame] = useState([]);
   useEffect(() => {
-    fetch(`${CONSTANT.BaseUrl}mycasino/NEW`,{
+    fetch(`${CONSTANT.BaseUrl}mycasino/NEW`, {
       method: 'GET',
     })
-    .then((res) => res.json())
-    .then((json) => {
-      setNewGame(json.items); 
-    })
-    .catch((error) => {
-      console.log(error)      
-    })
-  },[])
-
-  setTimeout(() => {
-    setLoaderDisable("loaderDisable")
-  }, 3000);
-
+      .then((res) => res.json())
+      .then((json) => {
+        setNewGame(json.items);
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
+  
   return (
     <>
       <div class={"loading " + loaderdisable}>Loading&#8230;</div>
-      <Container className="container_fluid_hwe carousel_content">
+      <Container className="container_fluid_hwe carousel_content carousel_content_lobby">
         <Row className="mb-3 inner">
           <Col xs="6">
             <h4 className="carousel_title">Newly Added</h4>
@@ -77,32 +75,32 @@ function CarouselSection() {
         <Row className="justify-content-center">
           <Col md="12">
             <Swiper
-              spaceBetween={30}
+              slidesPerView={2}
+              spaceBetween={20}
               navigation={true}
               modules={[Navigation]}
               className="mySwiper"
-              breakpoints={{
-                500: {
-                  width: 500,
-                  slidesPerView: 1,
-                },
-                768: {
-                  width: 768,
+              breakpoints={{              
+                767: {
+                  width: 767,
                   slidesPerView: 2,
+                  spaceBetween: 30
                 },
                 1200: {
                   width: 1200,
                   slidesPerView: 4,
+                  spaceBetween: 30
                 },
               }}
-            >             
-             {popularGame.map((popular) => <SwiperSlide>
-                <Card className="slider_card">                 
-                  <img
-                    alt="..."
-                    className="Slider Image..."
-                    src={require("../../assets/img/slider_img.png")}
-                  />
+            >
+              {popularGame.map((popular) => <SwiperSlide className="swiperslide_hwe">
+                <Card className="slider_card">
+                  <CardHeader>
+                    <img
+                      alt="Image Not Found"
+                      src={popular.game_img ? CONSTANT.ImageUrl + popular.game_img : require("../../assets/img/No_Image_Available.jpg")}
+                    />
+                  </CardHeader>
                   <CardBody>
                     <CardTitle tag="h5">
                       {popular.game_name}
@@ -122,7 +120,7 @@ function CarouselSection() {
                   </CardBody>
                 </Card>
               </SwiperSlide>
-             )};                             
+              )};
             </Swiper>
           </Col>
         </Row>
@@ -150,36 +148,37 @@ function CarouselSection() {
         <Row className="justify-content-center">
           <Col md="12">
             <Swiper
-              spaceBetween={30}
-              navigation={true}
-              modules={[Navigation]}
-              className="mySwiper"
-              breakpoints={{
-                500: {
-                  width: 500,
-                  slidesPerView: 1,
-                },
-                768: {
-                  width: 768,
-                  slidesPerView: 2,
-                },
-                1200: {
-                  width: 1200,
-                  slidesPerView: 4,
-                },
-              }}
-            > 
-             
-             {newGame.map((newly) => <SwiperSlide>
-                <Card className="slider_card">                 
-                  <img
-                    alt="..."
-                    className="Slider Image..."
-                    src={require("../../assets/img/slider_img.png")}
-                  />
+               slidesPerView={2}
+               spaceBetween={20}
+               navigation={true}
+               modules={[Navigation]}
+               className="mySwiper"
+               breakpoints={{              
+                 767: {
+                   width: 767,
+                   slidesPerView: 2,
+                   spaceBetween: 30
+                 },
+                 1200: {
+                   width: 1200,
+                   slidesPerView: 4,
+                   spaceBetween: 30
+                 },
+               }}
+            >
+
+              {newGame.map((newly) => <SwiperSlide className="swiperslide_hwe">
+                <Card className="slider_card">
+                  <CardHeader>
+                    <img
+                      alt="Image Not Found"
+                      className="slider_image"
+                      src={newly.game_img ? CONSTANT.ImageUrl + newly.game_img : require("../../assets/img/No_Image_Available.jpg")}
+                    />
+                  </CardHeader>
                   <CardBody>
                     <CardTitle tag="h5">
-                    {newly.game_name}
+                      {newly.game_name}
                     </CardTitle>
                     <CardSubtitle
                       className="mb-2"
@@ -196,11 +195,11 @@ function CarouselSection() {
                   </CardBody>
                 </Card>
               </SwiperSlide>
-             )};              
+              )};
             </Swiper>
           </Col>
         </Row>
-      </Container>      
+      </Container>
     </>
   );
 }

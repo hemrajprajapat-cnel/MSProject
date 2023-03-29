@@ -1,9 +1,14 @@
+@font-face {
+    font-family: "poligon";
+    src: url("../../fonts/poligon/Poligon-Regular.otf");
+}
+
 button,
 input,
 optgroup,
 select,
 textarea{
-    font-family: $sans-serif-family;
+    font-family: "poligon";
 }
 h1,h2,h3,h4,h5,h6{
     font-weight: $font-weight-normal;

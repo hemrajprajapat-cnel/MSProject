@@ -1,52 +1,201 @@
-#navbar-brand a{
-    text-decoration: none !important;
-} 
+.navbar_hwe .toggle_content_hwe {
+    display: none;
+}
 
-.logo_brand{
+.navbar_hwe .toggle_content_hwe i {
+    color: #fff;
+    font-size: 18px;
+}
+
+.navbar_hwe .toggle_content_hwe a {
+    position: relative;
+    top: -2px;
+}
+
+#navbar-brand {
+    width: 100px;
+}
+
+#navbar-brand a {
+    text-decoration: none !important;
+}
+
+.logo_brand {
     font-weight: 900;
     text-transform: capitalize;
     font-size: 19px;
     cursor: pointer;
     margin-bottom: 5px;
     color: #284edf;
-} 
+}
 
-.nav_login{
+.nav_login {
     color: #284edf;
     font-weight: 700;
     font-size: 15px;
     cursor: pointer;
     padding: 8px 15px !important;
 }
-.nav_login:hover{
-    color: #284edf !important;    
+
+.nav_login:hover {
+    color: #284edf !important;
 }
 
-.nav_search{
+.nav_search {
     width: 50%;
     margin-top: 0.5rem;
 }
 
-.nav_search .search_filter{
+.nav_search .search_filter {
     background-color: #fff;
+    font-size: 15px;
 }
 
-@media only screen and (max-width: 991px){
+
+/* Searchbar Filter */
+#search_provider_games {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: #fff;
+    z-index: 1032;
+    position: sticky;
+    top: 0;    
+}
+
+#search_provider_games .angleleft{
+    border-radius: 5px;
+    border: 2px solid #0082ff;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    height: max-content;
+    padding: 6px;
+}
+
+#search_provider_games .angleleft svg{
+    font-size: 25px;
+    color: #0082ff;
+}
+
+#search_provider_games .nav_search{
+    width: 100%;
+}
+
+#search_provider_games .search_provider{
+    border-radius: 0px 5px 5px 0px;
+    outline: none !important;
+    border: 2px solid #0082ff !important;
+    border-left: none !important;
+    height: max-content;
+    padding: 8px 18px 9px 18px;
+}
+
+#search_provider_games .search_provider::placeholder{
+    color: #0082ff !important;
+}
+
+#search_provider_games .search_icon{    
+    border: 2px solid #0082ff;
+    border-right: none;
+    border-radius: 5px 0px 0px 5px;
+    height: max-content;
+}
+
+#search_provider_games .search_icon i{
+    color: #0082ff;
+}
+
+.nav_search .search_filter:focus,
+#search_provider_games .search_provider:focus {
+    border: 1px solid #E3E3E3;
+    border-left: unset;
+}
+
+.providerList{
+    display: none;
+}
+
+.game_providers_btn{
+    justify-content: center;
+}
+
+.game_providers_btn button{
+    background-color: #0082ff;
+    font-size: 14px;
+}
+
+.game_providers_btn button:hover{
+    background-color: #0082ff;
+}
+
+.provider_content{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+}
+
+.provider_content .content{
+    width: 200px;
+    margin-top: 1rem;
+    margin-right: 1.2rem;
+}
+
+.provider_content .content img{
+  width: 100%;
+  height: 200px;
+}
+
+.provider_content .content .provider_name{
+  display: none;
+}
+
+.provider_content .Not_found{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 4rem 0;
+}
+
+
+/* @Media Query */
+@media only screen and (max-width: 991px) {
 
     /* For Collapse Navbar */
     .sidebar-collapse .navbar-collapse {
         display: table !important;
     }
-    
+
     .sidebar-collapse .navbar .navbar-nav {
         margin: 1rem 1rem 0;
     }
 
-    .nav_search{
+    .nav_search {
         width: 90%;
     }
 
     .sidebar-collapse .navbar-collapse .navbar-nav:not(.navbar-logo) .nav-link {
         margin: 0;
     }
+
+    .navbar_hwe .toggle_content_hwe {
+        display: block;
+    }
+
+    .navbar.navbar-transparent {
+        padding-top: 0px !important;
+    }
+}
+
+
+@media only screen and (max-width: 468px) {
+
+    .provider_content{
+        justify-content: space-between !important;
+    }
+
+    .provider_content .content{
+        width: 48% !important;
+        margin-right: 0;
+    }
+
 }

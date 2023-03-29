@@ -1,3 +1,7 @@
+.main_slot {
+  padding-top: 90px;
+}
+
 .slot_tabs .inner {
   display: flex;
   justify-content: center;
@@ -11,13 +15,13 @@
   padding: 7px 10px;
   border-radius: 10px;
   font-weight: 600;
-  font-size: 12px;
+  font-size: 14px;
   cursor: pointer;
   background-color: #fff !important;
 }
 
 
-.slot_tabs .active{
+.slot_tabs .active {
   color: white !important;
   border: transparent !important;
   background-image: linear-gradient(to left, #357ef6, #2f6def, #2b63ea, #2859e5, #284edf);
@@ -35,8 +39,42 @@
   background-image: linear-gradient(to left, #2f6def, #2b63ea, #2859e5);
 }
 
+.slot_gamelist {
+  margin-top: 1rem;
+}
+
+.slote_card .card-header {
+  height: 150px;
+  border: 1px solid;
+}
+
 .slote_card img {
   width: 100%;
+  height: 100%;
+}
+
+.slote_card .card-body {
+  padding: 0.5rem;
+  border: 1px solid #2748DC;
+  border-top: none;
+}
+
+.slote_card .card-body .card-title {
+  color: #2748DC;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.slote_card .card-body .card-subtitle {
+  color: #3880F7;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.slote_card img {
+  width: 100%;
+  height: 100%;
 }
 
 
@@ -128,10 +166,58 @@
   font-weight: 600;
 }
 
+.slote_pagination {
+  display: none !important;
+}
+
+.slot_gamelist .Not_found {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 4rem 0;
+}
+
+
 @media only screen and (min-width: 450px) {
+
   .pagination button,
   .paginationButton {
     padding: 7px 10px;
     margin: 3px;
   }
+
+}
+
+@media only screen and (max-width: 450px) {
+
+  .slot_tabs {
+    flex-direction: column-reverse;
+  }
+
+  .slot_tabs .filter {
+    margin-top: 0;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .main_slot {
+    padding-top: 60px;
+  }
+
+  .slote_card .card-header {
+    height: 80px;
+  }
+
+  .slote_card .card-body {
+    height: 110px;
+  }
+
+  .slot_gamelist {
+    margin-top: 0.5rem;
+  }
+
+  #unic_card_hwe {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+
 }

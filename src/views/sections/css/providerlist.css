@@ -1,0 +1,88 @@
+/* Evolution Games List */
+
+#Evolution_games {
+    margin: 1rem 0px 1rem;
+}
+
+#Evolution_games .angleleft {
+    border-radius: 5px;
+    border: 2px solid #0082ff;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    height: max-content;
+    padding: 4px;
+}
+
+#Evolution_games .angleleft svg {
+    font-size: 25px;
+    color: #0082ff;
+}
+
+#Evolution_games .evolution_heading h5 {
+    margin: 0;
+    margin: 1rem 0;
+    color: #1A49E5;
+    font-size: 18px;
+}
+
+.evolution_card .card-header {
+    height: 150px;
+    border: 1px solid;
+}
+
+.evolution_card img {
+    width: 100%;
+    height: 100%;
+}
+
+.evolution_card .card-body {
+    padding: 0.5rem;
+    border: 1px solid #2748DC;
+    border-top: none;
+}
+
+.evolution_card .card-body .card-title {
+    color: #2748DC;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.evolution_card .card-body .card-subtitle {
+    color: #3880F7;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.evolution_card img {
+    width: 100%;
+    height: 100%;
+}
+
+#Evolution_games .Not_found{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 4rem 0;
+}
+
+.provider_list_pagination{
+    display: none;
+}
+
+@media only screen and (max-width: 450px) {
+  
+    .evolution_card .card-header {
+      height: 80px;
+    }
+  
+    .evolution_card .card-body {
+      height: 110px;
+    }
+
+    #evolution_card_hwe {
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+    }
+  
+  }

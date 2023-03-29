@@ -1,5 +1,5 @@
 import React from 'react';
-import '../views/sections/css/Slot.css';
+import '../views/sections/css/slot.css';
 
 export default function MyPagination({ totalItem, itemPerPage, handleCallBack }) {
 
