@@ -34,7 +34,7 @@ function Slots() {
   // Pagination Data
   const [first_page, setfirst_page] = React.useState();
   const [last_page, setlast_page] = React.useState();
-  const [current_page, setcurrent_page] = React.useState();
+  const [current_page, setcurrent_page] = React.useState(1);
   const [total_rows, settotal_rows] = React.useState();
   const [itemPerPage, setItemPerPage] = React.useState(50);
 
@@ -62,7 +62,7 @@ function Slots() {
   };
 
   const getGameList = () => {
-    fetch(`${CONSTANT.BaseUrl}category/SLOT?sortBy=${sortBy}&provider=${provider}&game_type=${game_type}&currency=${currency}&feature=${feature}&theme=${theme}&volatility=${volatility}&page=${current_page ? current_page : 1}`, {
+    fetch(`${CONSTANT.BaseUrl}category/SLOT?sortBy=${sortBy}&provider=${provider}&game_type=${game_type}&currency=${currency}&feature=${feature}&theme=${theme}&volatility=${volatility}&page=${current_page}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -91,11 +91,10 @@ function Slots() {
   // Onload And also onchange
   React.useEffect(() => {
     getGameList();
+
     document.body.classList.add("index-page");
     document.body.classList.add("sidebar-collapse");
     document.documentElement.classList.remove("nav-open");
-    // window.scrollTo(0, 0);
-    // document.body.scrollTop = 0;
     return function cleanup() {
       document.body.classList.remove("index-page");
       document.body.classList.remove("sidebar-collapse");
@@ -103,25 +102,20 @@ function Slots() {
   }, [sortBy, current_page, provider, game_type, currency, feature, theme, volatility]);
 
 
-  // get data from child to parent
-  function callBack(childData) {
+  // For Pagination & get data from child to parent
+  function callBack(childData) {    
     setcurrent_page(childData);
   }
-
-  // For Pagination
   function pageDecrease() {
     if (current_page > first_page) {
       setcurrent_page(current_page - 1);
-    } else {
-      setcurrent_page(Math.ceil(total_rows / itemPerPage));
-    }
+    } 
   }
   function pageIncrease() {
     if (current_page < last_page) {
       setcurrent_page(current_page + 1);
-    } else {
-      setcurrent_page(1);
-    }
+    } 
+
   }
 
   // For Filter Data
@@ -134,33 +128,25 @@ function Slots() {
     } else if (index == 3) {
       setsortBy("alphabetical");
     }
-    // getGameList();
   }
   function providerValue(provider) {
     setprovider(provider)
-    // getGameList();
   }
   function game_typeValue(game_type) {
     setgame_type(game_type)
-    // getGameList();
   }
   function currencyValue(currency) {
     setcurrency(currency)
-    // getGameList();
   }
   function featureValue(feature) {
     setfeature(feature)
-    // getGameList();
   }
   function themeValue(theme) {
     settheme(theme)
-    // getGameList();
   }
   function volatilityValue(volatility) {
     setvolatility(volatility)
-    // getGameList();
   }
-
 
   // For ShortBy Button
   $(document).ready(function () {
@@ -311,9 +297,9 @@ function Slots() {
         </div>
       </div>
       <div className={`pagination mt-2 ${gamelist == "" ? "slote_pagination" : ""}`}>
-        <button onClick={pageDecrease}>Prev</button>
-        <MyPagination totalItem={total_rows} itemPerPage={itemPerPage} handleCallBack={callBack} />
-        <button onClick={pageIncrease}>Next</button>
+        <button onClick={pageDecrease} className={"PrevNextBtn"}>Prev</button>
+          <MyPagination totalItem={total_rows} itemPerPage={itemPerPage} handleCallBack={callBack} current_page={current_page} />
+        <button onClick={pageIncrease} className={"PrevNextBtn"}>Next</button>
       </div>
     </>
   );

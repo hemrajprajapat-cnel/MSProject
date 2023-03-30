@@ -1,7 +1,7 @@
 import React from 'react';
 import '../views/sections/css/slot.css';
 
-export default function MyPagination({ totalItem, itemPerPage, handleCallBack }) {
+export default function MyPagination({ totalItem, itemPerPage, handleCallBack, current_page }) {
 
   let Pages = [];
   for (let i = 0; i < Math.ceil(totalItem / itemPerPage); i++) {
@@ -12,10 +12,10 @@ export default function MyPagination({ totalItem, itemPerPage, handleCallBack })
     <>
       {
         Pages.map((page, index) => {
-          return (
+          return (                        
             <button
               onClick={(e) => handleCallBack(index + 1)}
-              className='paginationButton' key={index}>
+              className={"paginationButton " + (page+1 == current_page ? 'activePage' : '' )} key={index}>
               {page + 1}
             </button>
           )

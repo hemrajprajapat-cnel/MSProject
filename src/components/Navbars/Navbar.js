@@ -5,23 +5,15 @@ import * as CONSTANT from '../../BaseURL';
 import {
   Button,
   Collapse,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
   NavbarBrand,
   Navbar,
   NavItem,
-  NavLink,
   Nav,
   Container,
-  UncontrolledTooltip,
   Input,
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  Row,
-  Col
 } from "reactstrap";
 import './navbar.css';
 import $ from "jquery";
@@ -115,6 +107,10 @@ function IndexNavbar() {
           </InputGroup>
         </Nav>
 
+        <Nav className="game_providers_btn">
+          <p className="mb-1">Please enter at least 3 corrector</p>
+        </Nav>
+
         {searchTerm.length < 3 ?
           <Nav className="game_providers_btn">
             <Button id="search-btn">Game Providers</Button>
@@ -130,9 +126,9 @@ function IndexNavbar() {
                   <div className="content">
                     <div className="provider_name">{gameprovider.name}</div>
                     <Link to={`/providerList/${gameprovider.code}`}>
-                      <img
+                    <img
                         alt="Image Not Found"
-                        src={require("../../assets/img/avatar_ux.png")}
+                        src={`${CONSTANT.ProviderGameImg + gameprovider.code}.png` ? `${CONSTANT.ProviderGameImg + gameprovider.code}.png` : require("../../assets/img/No_Image_Available.jpg")}
                       />
                     </Link>
                   </div>
@@ -148,24 +144,22 @@ function IndexNavbar() {
           </div>
           :
           <div className={`provider_content ${"Disable"}`}>
-            {allGameList
-              .filter((item) =>
+            {allGameList.filter((item) =>
                 item.description.toLowerCase().includes(searchTerm.toLowerCase())
               )
               .map((item) => (
                 <div className="content">
                   <div className="provider_name">{item.description}</div>
                   <Link to={`/providerList/${item.game_code}`}>
-                    <img
-                      alt="Image Not Found"
-                      src={require("../../assets/img/avatar_ux.png")}
-                    />
+                      <img
+                        alt="Image Not Found"
+                        src={item.game_img ? CONSTANT.ImageUrl + item.game_img : require("../../assets/img/No_Image_Available.jpg")}
+                      />
                   </Link>
                 </div>
               ))}
           </div>
         }
-
       </Container>
 
       <Navbar className="navbar_hwe fixed-top navbar-transparent" expand="lg" color="white">
@@ -173,7 +167,7 @@ function IndexNavbar() {
           <div className="navbar-translate">
             <NavbarBrand
               id="navbar-brand"
-            >
+            > 
               <Link to="/MYCASINO"><h3 className="logo_brand">{setpath}</h3></Link>
             </NavbarBrand>
             <Nav className="toggle_content_hwe">

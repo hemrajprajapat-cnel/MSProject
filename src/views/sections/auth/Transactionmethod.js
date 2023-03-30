@@ -76,7 +76,7 @@ function Transactionmethod() {
           </Row>
           <Row>
             <Col md="12 mt-3 text-center">
-              <Link to="/provider"><Button type="submit" className="btn btn-md btn-primary transectionmethod_submit">Submit</Button></Link>
+              <Link to="#"><Button type="submit" className="btn btn-md btn-primary transectionmethod_submit">Submit</Button></Link>
             </Col>
           </Row>
         </Container>

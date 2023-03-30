@@ -27,7 +27,11 @@ function CarouselSection() {
   const [popularGame, setPopularGame] = useState([]);
   const [loaderdisable, setLoaderDisable] = useState();
 
-
+  const OpenProviderList = () => {
+    let list = document.getElementById("search_provider_games");
+    list.classList.remove("providerList");
+  };
+  
   useEffect(() => {
     fetch(`${CONSTANT.BaseUrl}mycasino/POPULARITY`, {
       method: 'GET',
@@ -67,7 +71,11 @@ function CarouselSection() {
             <h4 className="carousel_title">Newly Added</h4>
           </Col>
           <Col xs="6" className="text-right">
-            <Button className="show_more" type="button">
+            <Button 
+              className="show_more" 
+              type="button"
+              onClick={OpenProviderList}
+            >
               SHOW MORE
             </Button>
           </Col>
@@ -140,7 +148,11 @@ function CarouselSection() {
             <h4 className="carousel_title">Most Popular</h4>
           </Col>
           <Col xs="6" className="text-right">
-            <Button className="show_more" type="button">
+            <Button 
+              className="show_more" 
+              type="button"
+              onClick={OpenProviderList}
+            >
               SHOW MORE
             </Button>
           </Col>

@@ -31,7 +31,7 @@ function EvolutionList() {
   // Pagination Data
   const [first_page, setfirst_page] = React.useState();
   const [last_page, setlast_page] = React.useState();
-  const [current_page, setcurrent_page] = React.useState();
+  const [current_page, setcurrent_page] = React.useState(1);
   const [total_rows, settotal_rows] = React.useState();
   const [itemPerPage, setItemPerPage] = React.useState(25);
 
@@ -44,7 +44,7 @@ function EvolutionList() {
   }, [current_page]);
 
   const getEvolutionList = () => {
-    fetch(`${CONSTANT.BaseUrl}provider-game-list?provider=${providercode}&page=${current_page ? current_page : 1}`, {
+    fetch(`${CONSTANT.BaseUrl}provider-game-list?provider=${providercode}&page=${current_page}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -77,15 +77,11 @@ function EvolutionList() {
   function pageDecrease() {
     if (current_page > first_page) {
       setcurrent_page(current_page - 1);
-    } else {
-      setcurrent_page(Math.ceil(total_rows / itemPerPage));
-    }
+    } 
   }
   function pageIncrease() {
     if (current_page < last_page) {
       setcurrent_page(current_page + 1);
-    } else {
-      setcurrent_page(1);
     }
   }
 
@@ -138,9 +134,9 @@ function EvolutionList() {
         </Row>
       </Container>
       <div className={`pagination mb-2 ${evolutionlist == "" ? "provider_list_pagination" : ""}`} >
-        <button onClick={pageDecrease}>Prev</button>
-        <MyPagination totalItem={total_rows} itemPerPage={itemPerPage} handleCallBack={callBack} />
-        <button onClick={pageIncrease}>Next</button>
+        <button onClick={pageDecrease} className={"PrevNextBtn"}>Prev</button>
+          <MyPagination totalItem={total_rows} itemPerPage={itemPerPage} handleCallBack={callBack} current_page={current_page} />
+        <button onClick={pageIncrease} className={"PrevNextBtn"}>Next</button>
       </div>
     </>
   );

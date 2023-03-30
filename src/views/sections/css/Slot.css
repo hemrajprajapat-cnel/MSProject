@@ -170,6 +170,15 @@
   display: none !important;
 }
 
+.PrevNextBtn,
+.activePage{
+  background-color: #2748DC !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+/* end */
+
 .slot_gamelist .Not_found {
   width: 100%;
   display: flex;

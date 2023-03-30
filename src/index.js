@@ -32,7 +32,6 @@ import Register from "views/sections/auth/Register.js";
 import Login from "views/sections/auth/Login.js";
 import PicInformation from "views/sections/auth/PicInformation.js";
 import Transactionmethod from "views/sections/auth/Transactionmethod.js";
-import Provider from "views/sections/auth/Provider.js";
 import ForgotPassword from "views/sections/auth/forgotpassword.js";
 import Slot from "views/sections/Slots.js";
 import EvolutionList from "views/sections/ProviderList.js";
@@ -68,10 +67,6 @@ root.render(
         <Route
           path="/transactionmethod"
           render={(props) => <Transactionmethod {...props} />}
-        />
-        <Route
-          path="/provider"
-          render={(props) => <Provider {...props} />}
         />
         <Route
           path="/forgotpassword"
