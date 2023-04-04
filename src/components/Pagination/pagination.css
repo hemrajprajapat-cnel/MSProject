@@ -1,0 +1,46 @@
+/* pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 50
+}
+
+.pagination button,
+.paginationButton {
+  border: none;
+  background: none;
+  padding: 5px 7px;
+  border: 1px solid #3880F7;
+  border-radius: 4px;
+  margin: 1px;
+  color: #2748DC;
+  font-weight: 600;
+}
+
+.slote_pagination {
+  display: none !important;
+}
+
+.PrevNextBtn,
+.activePage{
+  background-color: #2748DC !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+.disabled{
+  background-color: #9aa1be !important; 
+}
+
+/* end */
+
+
+@media only screen and (min-width: 450px) {
+
+  .pagination button,
+  .paginationButton {
+    padding: 7px 10px;
+    margin: 3px;
+  }
+
+}

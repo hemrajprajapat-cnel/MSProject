@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaAngleLeft } from 'react-icons/fa';
 import * as CONSTANT from '../../BaseURL';
-import MyPagination from 'components/MyPagination.js'
+import MyPagination from 'components/Pagination/MyPagination.js'
 import {
   Nav,
   Container,
@@ -17,13 +17,14 @@ import {
 } from "reactstrap";
 import './css/providerlist.css';
 
-
 function EvolutionList() {
 
   // Get Provider Code
   const pathname = window.location.pathname.split("/");
   const provider_code = pathname[pathname.length - 1];
+  const provider_name = pathname[pathname.length - 2];
   const [providercode, setProviderCode] = useState(provider_code);
+  const [providername, setProviderName] = useState(provider_name);
 
   // List Data
   const [evolutionlist, setEvolutionList] = useState([]);
@@ -34,6 +35,8 @@ function EvolutionList() {
   const [current_page, setcurrent_page] = React.useState(1);
   const [total_rows, settotal_rows] = React.useState();
   const [itemPerPage, setItemPerPage] = React.useState(25);
+  const [prevBtn, setPrevBtn] = React.useState("disabled");
+  const [nextBtn, setNextBtn] = React.useState("");
 
   // Disable Loader
   const [loaderdisable, setLoaderDisable] = useState();
@@ -69,25 +72,49 @@ function EvolutionList() {
 
 
   // Get data from child to parent
-  function callBack(childData) {
-    setcurrent_page(childData);
-  }
+  function callBack(childData) { 
+    disableBtnDate();
 
-  // For Pagination
+    setcurrent_page(childData);
+    
+    if(childData == first_page){
+      setPrevBtn("disabled");
+    }
+    if (childData == last_page) {
+      setNextBtn("disabled");
+    }
+  }
   function pageDecrease() {
+    disableBtnDate();
+
     if (current_page > first_page) {
       setcurrent_page(current_page - 1);
     } 
+
+    if (current_page-1 == first_page) {
+      setPrevBtn("disabled")
+    }
+
   }
   function pageIncrease() {
+    disableBtnDate();
+
     if (current_page < last_page) {
       setcurrent_page(current_page + 1);
-    }
+    }     
+
+    if (current_page+1 == last_page) {
+      setNextBtn("disabled");
+    }    
+  }
+  function disableBtnDate(){
+    setPrevBtn("");
+    setNextBtn("");
   }
 
   return (
     <>
-      <div class={"loading " + loaderdisable}>Loading&#8230;</div>
+      <div className={"loading " + loaderdisable}>Loading&#8230;</div>
       <Container id="Evolution_games" className="container_fluid_hwe">
         <Nav>
           <Link to="/MYCASINO">
@@ -97,7 +124,7 @@ function EvolutionList() {
           </Link>
         </Nav>
         <Nav className="evolution_heading">
-          <h5>Games by Evolution</h5>
+          <h5>Games by {providername}</h5>
         </Nav>
         <Row className="justify-content-start flex-wrap">
           {evolutionlist != "" ?
@@ -134,9 +161,9 @@ function EvolutionList() {
         </Row>
       </Container>
       <div className={`pagination mb-2 ${evolutionlist == "" ? "provider_list_pagination" : ""}`} >
-        <button onClick={pageDecrease} className={"PrevNextBtn"}>Prev</button>
+        <button onClick={pageDecrease} className={"PrevNextBtn " + prevBtn} id="PrevBtn" disabled={prevBtn ? true : false}>Prev</button>
           <MyPagination totalItem={total_rows} itemPerPage={itemPerPage} handleCallBack={callBack} current_page={current_page} />
-        <button onClick={pageIncrease} className={"PrevNextBtn"}>Next</button>
+        <button onClick={pageIncrease} className={"PrevNextBtn " + nextBtn} disabled={nextBtn ? true : false}>Next</button>
       </div>
     </>
   );

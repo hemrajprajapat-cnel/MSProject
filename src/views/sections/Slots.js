@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Navbar from "components/Navbars/Navbar.js";
 import Header from "components/Headers/Header.js";
 import * as CONSTANT from '../../BaseURL';
-import MyPagination from 'components/MyPagination.js'
+import MyPagination from 'components/Pagination/MyPagination.js'
 import $ from 'jquery';
 import {
   Nav,
@@ -37,6 +37,8 @@ function Slots() {
   const [current_page, setcurrent_page] = React.useState(1);
   const [total_rows, settotal_rows] = React.useState();
   const [itemPerPage, setItemPerPage] = React.useState(50);
+  const [prevBtn, setPrevBtn] = React.useState("disabled");
+  const [nextBtn, setNextBtn] = React.useState("");
 
   // Provider Filter
   const [sortBy, setsortBy] = useState(["popularity"]);
@@ -103,23 +105,49 @@ function Slots() {
 
 
   // For Pagination & get data from child to parent
-  function callBack(childData) {    
+  function callBack(childData) { 
+    disableBtnDate();
+
     setcurrent_page(childData);
+    
+    if(childData == first_page){
+      setPrevBtn("disabled");
+    }
+    if (childData == last_page) {
+      setNextBtn("disabled");
+    }
   }
   function pageDecrease() {
+    disableBtnDate();
+
     if (current_page > first_page) {
       setcurrent_page(current_page - 1);
     } 
+
+    if (current_page-1 == first_page) {
+      setPrevBtn("disabled")
+    }
+
   }
   function pageIncrease() {
+    disableBtnDate();
+
     if (current_page < last_page) {
       setcurrent_page(current_page + 1);
-    } 
+    }     
 
+    if (current_page+1 == last_page) {
+      setNextBtn("disabled");
+    }    
   }
-
+  function disableBtnDate(){
+    setPrevBtn("");
+    setNextBtn("");
+  }
+  
   // For Filter Data
   function sortByValue(index) {
+    setcurrent_page(1);
     setLoaderDisable("")
     if (index == 1) {
       setsortBy("new");
@@ -129,24 +157,22 @@ function Slots() {
       setsortBy("alphabetical");
     }
   }
-  function providerValue(provider) {
-    setprovider(provider)
-  }
-  function game_typeValue(game_type) {
-    setgame_type(game_type)
-  }
-  function currencyValue(currency) {
-    setcurrency(currency)
-  }
-  function featureValue(feature) {
-    setfeature(feature)
-  }
-  function themeValue(theme) {
-    settheme(theme)
-  }
-  function volatilityValue(volatility) {
-    setvolatility(volatility)
-  }
+  function slotFilter(value, key) {
+    setcurrent_page(1);    
+    if(key == 1){
+      setprovider(value);
+    }else if(key == 2){
+      setgame_type(value);
+    }else if(key == 3){
+      setcurrency(value);
+    }else if(key == 4){
+      setfeature(value);
+    }else if(key == 5){
+      settheme(value);
+    }else if(key == 6){
+      setvolatility(value);
+    }
+  }  
 
   // For ShortBy Button
   $(document).ready(function () {
@@ -158,7 +184,7 @@ function Slots() {
 
   return (
     <>
-      <div class={"loading " + loaderdisable}>Loading&#8230;</div>
+      <div className={"loading " + loaderdisable}>Loading&#8230;</div>
       <Navbar />
       <div className="wrapper">
         <Header />
@@ -198,7 +224,7 @@ function Slots() {
                     <h6>Game Provider</h6>
                     {filterList?.provider.map((provider) => {
                       return (
-                        <Button className="short provider" type="button" onClick={e => providerValue(provider)}>
+                        <Button className="short provider" type="button" onClick={e => slotFilter(provider, 1)}>
                           {provider}
                         </Button>
                       );
@@ -208,7 +234,7 @@ function Slots() {
                     <div style={{ maxHeight: "500px", overflowY: "scroll", scrollbarWidth: "thin" }}>
                       {filterList?.game_type.map((game_type) => {
                         return (
-                          <Button className="short game_type" type="button" onClick={e => game_typeValue(game_type)}>
+                          <Button className="short game_type" type="button" onClick={e => slotFilter(game_type, 2)}>
                             {game_type}
                           </Button>
                         );
@@ -217,7 +243,7 @@ function Slots() {
                     <h6>Currency</h6>
                     {filterList?.currency.map((currency) => {
                       return (
-                        <Button className="short currency" type="button" onClick={e => currencyValue(currency)}>
+                        <Button className="short currency" type="button" onClick={e => slotFilter(currency, 3)}>
                           {currency}
                         </Button>
                       );
@@ -226,7 +252,7 @@ function Slots() {
                     <h6>Game feature</h6>
                     {filterList?.feature.map((feature) => {
                       return (
-                        <Button className="short feature" type="button" onClick={e => featureValue(feature)}>
+                        <Button className="short feature" type="button" onClick={e => slotFilter(feature, 4)}>
                           {feature}
                         </Button>
                       );
@@ -235,7 +261,7 @@ function Slots() {
                     <h6>Game theme</h6>
                     {filterList?.theme.map((theme) => {
                       return (
-                        <Button className="short theme" type="button" onClick={e => themeValue(theme)}>
+                        <Button className="short theme" type="button" onClick={e => slotFilter(theme, 5)}>
                           {theme}
                         </Button>
                       );
@@ -244,7 +270,7 @@ function Slots() {
                     <h6>Game volatility</h6>
                     {filterList?.volatility.map((volatility) => {
                       return (
-                        <Button className="short volatility" type="button" onClick={e => volatilityValue(volatility)}>
+                        <Button className="short volatility" type="button" onClick={e => slotFilter(volatility, 6)}>
                           {volatility}
                         </Button>
                       );
@@ -291,15 +317,15 @@ function Slots() {
                     src={require("../../assets/img/data_not_found.png")}
                   />
                 </Nav>
-              }
+              } 
             </Row>
           </div>
         </div>
       </div>
       <div className={`pagination mt-2 ${gamelist == "" ? "slote_pagination" : ""}`}>
-        <button onClick={pageDecrease} className={"PrevNextBtn"}>Prev</button>
+        <button onClick={pageDecrease} className={"PrevNextBtn " + prevBtn} id="PrevBtn" disabled={prevBtn ? true : false}>Prev</button>
           <MyPagination totalItem={total_rows} itemPerPage={itemPerPage} handleCallBack={callBack} current_page={current_page} />
-        <button onClick={pageIncrease} className={"PrevNextBtn"}>Next</button>
+        <button onClick={pageIncrease} className={"PrevNextBtn " + nextBtn} disabled={nextBtn ? true : false}>Next</button>
       </div>
     </>
   );

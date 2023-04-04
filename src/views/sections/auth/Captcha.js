@@ -26,7 +26,7 @@ function Captcha() {
           <Row>
             <Card className="card-captcha" data-background-color="white">
               <CardBody>
-                <div class="text-center">
+                <div className="text-center">
                   <img
                     alt="..."
                     className="Logo_image"
@@ -39,8 +39,8 @@ function Captcha() {
                 <p className="text-center">This site contains online casino games, Please confirm That you are of legal age before continuing</p>
                 <Row>
                   <Col md="12">
-                    <ReCAPTCHA
-                      sitekey="6LfaEDUlAAAAALVJZNOSf4hsuKXJcnxmhfBL7pKZ"
+                    <ReCAPTCHA                    
+                      sitekey="6LfoOzolAAAAAI9TX2x2BtIaqu1k3eyivd1BvAhU"
                       onChange={onChange}
                       className={"verifyRecaptcha"}
                     />
@@ -49,12 +49,12 @@ function Captcha() {
                 <Row>
                   <Col md="6">
                     <Link to="/MYCASINO">
-                      <button type="button" class="btn btn-block active" disabled={isDisabled}>YES, I'm Over 18</button>
+                      <button type="button" className="btn btn-block active" disabled={isDisabled}>YES, I'm Over 18</button>
                     </Link>
                   </Col>
                   <Col md="6">
                     <Link to="/">
-                      <button type="button" class="btn btn-block" disabled={isDisabled}>No, I want to leave</button>
+                      <button type="button" className="btn btn-block" disabled={isDisabled}>No, I want to leave</button>
                     </Link>
                   </Col>
                 </Row>

@@ -28,11 +28,6 @@ import "assets/demo/nucleo-icons-page-styles.css?v=1.5.0";
 // pages for this kit
 import Home from "views/Home.js";
 import Captcha from "views/sections/auth/Captcha.js";
-import Register from "views/sections/auth/Register.js";
-import Login from "views/sections/auth/Login.js";
-import PicInformation from "views/sections/auth/PicInformation.js";
-import Transactionmethod from "views/sections/auth/Transactionmethod.js";
-import ForgotPassword from "views/sections/auth/forgotpassword.js";
 import Slot from "views/sections/Slots.js";
 import EvolutionList from "views/sections/ProviderList.js";
 
@@ -51,27 +46,7 @@ root.render(
         <Route
           path="/captcha"
           render={(props) => <Captcha {...props} />}
-        />
-        <Route
-          path="/register"
-          render={(props) => <Register {...props} />}
-        />
-        <Route
-          path="/login"
-          render={(props) => <Login {...props} />}
-        />
-        <Route
-          path="/picinformation"
-          render={(props) => <PicInformation {...props} />}
-        />
-        <Route
-          path="/transactionmethod"
-          render={(props) => <Transactionmethod {...props} />}
-        />
-        <Route
-          path="/forgotpassword"
-          render={(props) => <ForgotPassword {...props} />}
-        />
+        />    
         <Route
           path="/SLOT"
           render={(props) => <Slot {...props} />}

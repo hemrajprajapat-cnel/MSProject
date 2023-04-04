@@ -54,7 +54,7 @@ function IndexHeader() {
                 <Link to={category.code}>
                   <div className="lessCategory">
                     <div className="banner_description">
-                      <i class="fa fa-building"></i>
+                      <i className="fa fa-building"></i>
                       <p>{category.name}</p>
                     </div>
                   </div>

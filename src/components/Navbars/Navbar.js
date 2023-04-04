@@ -75,6 +75,7 @@ function IndexNavbar() {
       .catch((error) => {
         console.log(error)
       })
+      
   }, []);
 
   // On Search Function

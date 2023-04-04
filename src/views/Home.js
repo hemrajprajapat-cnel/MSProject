@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 
 // core components
 import Navbar from "components/Navbars/Navbar.js";
 import Header from "components/Headers/Header.js";
-// import Footer from "components/Footer/Footer";
 
 // sections for this page
 import Lobby from "./sections/Lobby.js";
@@ -31,7 +30,6 @@ function Home() {
             <Lobby />
           }
         </div>
-        {/* <Footer /> */}
       </div>
     </>
   );
