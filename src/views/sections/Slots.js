@@ -3,7 +3,10 @@ import Navbar from "components/Navbars/Navbar.js";
 import Header from "components/Headers/Header.js";
 import * as CONSTANT from '../../BaseURL';
 import MyPagination from 'components/Pagination/MyPagination.js'
+import GameDetail from "components/Gamedetail/Gamedetails";
+import "../../components/Loader/loader.css";
 import $ from 'jquery';
+import "./css/slot.css";
 import {
   Nav,
   Row,
@@ -15,14 +18,14 @@ import {
   CardTitle,
   CardSubtitle,
 } from "reactstrap";
-// Custome Css
-import "../sections/css/slot.css";
-import "./css/loader.css";
 
 function Slots() {
+  // For Game Details Page
+  const [gamecode, setGameCode] = useState('');
+  const [datalist, setDataList] = useState('');
 
   // List Data
-  const [gamelist, setGamelist] = React.useState("");
+  const [slotGamelist, setSlotGamelist] = React.useState("");
   const [gameLength, setGameLength] = useState();
 
   // Disable Loader
@@ -73,7 +76,7 @@ function Slots() {
     })
       .then((res) => res.json())
       .then((json) => {
-        setGamelist(json.game_list.items);
+        setSlotGamelist(json.game_list.items);
         setFilterList(json.filter_list);
 
         setLoaderDisable("loaderDisable")
@@ -105,12 +108,12 @@ function Slots() {
 
 
   // For Pagination & get data from child to parent
-  function callBack(childData) { 
+  function callBack(childData) {
     disableBtnDate();
 
     setcurrent_page(childData);
-    
-    if(childData == first_page){
+
+    if (childData == first_page) {
       setPrevBtn("disabled");
     }
     if (childData == last_page) {
@@ -122,9 +125,9 @@ function Slots() {
 
     if (current_page > first_page) {
       setcurrent_page(current_page - 1);
-    } 
+    }
 
-    if (current_page-1 == first_page) {
+    if (current_page - 1 == first_page) {
       setPrevBtn("disabled")
     }
 
@@ -134,17 +137,17 @@ function Slots() {
 
     if (current_page < last_page) {
       setcurrent_page(current_page + 1);
-    }     
+    }
 
-    if (current_page+1 == last_page) {
+    if (current_page + 1 == last_page) {
       setNextBtn("disabled");
-    }    
+    }
   }
-  function disableBtnDate(){
+  function disableBtnDate() {
     setPrevBtn("");
     setNextBtn("");
   }
-  
+
   // For Filter Data
   function sortByValue(index) {
     setcurrent_page(1);
@@ -158,21 +161,37 @@ function Slots() {
     }
   }
   function slotFilter(value, key) {
-    setcurrent_page(1);    
-    if(key == 1){
+    setcurrent_page(1);
+    if (key == 1) {
       setprovider(value);
-    }else if(key == 2){
+    } else if (key == 2) {
       setgame_type(value);
-    }else if(key == 3){
+    } else if (key == 3) {
       setcurrency(value);
-    }else if(key == 4){
+    } else if (key == 4) {
       setfeature(value);
-    }else if(key == 5){
+    } else if (key == 5) {
       settheme(value);
-    }else if(key == 6){
+    } else if (key == 6) {
       setvolatility(value);
     }
-  }  
+  }
+
+  // OpenGameDetails
+  function OpenGameDetail(gameCode) {
+    var gamecode = gameCode;
+    setGameCode(gamecode);
+
+    for (let i = 0; i < slotGamelist.length; i++) {
+      if (gamecode == slotGamelist[i].game_code) {
+        setDataList(slotGamelist[i]);
+      }
+    };
+
+    let list = document.getElementById("game-detail");
+    list.classList.remove("open-detail-list");
+    $('.page-header').hide();
+  };
 
   // For ShortBy Button
   $(document).ready(function () {
@@ -185,6 +204,7 @@ function Slots() {
   return (
     <>
       <div className={"loading " + loaderdisable}>Loading&#8230;</div>
+      <GameDetail gameCode={gamecode} data={datalist} />
       <Navbar />
       <div className="wrapper">
         <Header />
@@ -287,11 +307,11 @@ function Slots() {
             </Row>
 
             <Row className="justify-content-start flex-wrap slot_gamelist">
-              {gamelist != "" ?
-                gamelist.map((item) => {
+              {slotGamelist != "" ?
+                slotGamelist.map((item) => {
                   return (
                     <Col md="3" sm="6" xs="6" id="unic_card_hwe">
-                      <Card className="slote_card">
+                      <Card className="slote_card" onClick={(e) => OpenGameDetail(item.game_code)}>
                         <CardHeader>
                           <img
                             alt="Image Not Found"
@@ -317,12 +337,12 @@ function Slots() {
                     src={require("../../assets/img/data_not_found.png")}
                   />
                 </Nav>
-              } 
+              }
             </Row>
           </div>
         </div>
       </div>
-      <div className={`pagination mt-2 ${gamelist == "" ? "slote_pagination" : ""}`}>
+      <div className={`pagination mt-2 ${slotGamelist == "" ? "slote_pagination" : ""}`}>
         <button onClick={pageDecrease} className={"PrevNextBtn " + prevBtn} id="PrevBtn" disabled={prevBtn ? true : false}>Prev</button>
           <MyPagination totalItem={total_rows} itemPerPage={itemPerPage} handleCallBack={callBack} current_page={current_page} />
         <button onClick={pageIncrease} className={"PrevNextBtn " + nextBtn} disabled={nextBtn ? true : false}>Next</button>

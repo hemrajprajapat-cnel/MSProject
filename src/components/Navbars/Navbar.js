@@ -14,6 +14,13 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroup,
+  Card,
+  CardHeader,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  Row,
+  Col,
 } from "reactstrap";
 import './navbar.css';
 import $ from "jquery";
@@ -75,7 +82,7 @@ function IndexNavbar() {
       .catch((error) => {
         console.log(error)
       })
-      
+
   }, []);
 
   // On Search Function
@@ -103,19 +110,20 @@ function IndexNavbar() {
               type="text"
               className="search_filter search_provider"
               id="search-Terms"
-              onChange={(e) => handleSearch(e)}              
+              onChange={(e) => handleSearch(e)}
             ></Input> <br />
           </InputGroup>
         </Nav>
 
-        <Nav className="game_providers_btn">
-          <p className="mb-1">Please enter at least 3 corrector</p>
-        </Nav>
-
         {searchTerm.length < 3 ?
-          <Nav className="game_providers_btn">
-            <Button id="search-btn">Game Providers</Button>
-          </Nav>
+          <div>
+            <Nav className="game_providers_btn">
+              <p className="mb-1">Please enter at least 3 correctors</p>
+            </Nav>
+            <Nav className="game_providers_btn">
+              <Button id="search-btn">Game Providers</Button>
+            </Nav>  
+          </div>
           : null
         }
 
@@ -126,8 +134,8 @@ function IndexNavbar() {
                 return (
                   <div className="content">
                     <div className="provider_name">{gameprovider.name}</div>
-                    <Link to={`/providerList/${gameprovider.code}`}>
-                    <img
+                    <Link to={`/providerList/${gameprovider.name}/${gameprovider.code}`}>
+                      <img
                         alt="Image Not Found"
                         src={`${CONSTANT.ProviderGameImg + gameprovider.code}.png` ? `${CONSTANT.ProviderGameImg + gameprovider.code}.png` : require("../../assets/img/No_Image_Available.jpg")}
                       />
@@ -144,22 +152,33 @@ function IndexNavbar() {
             }
           </div>
           :
-          <div className={`provider_content ${"Disable"}`}>
+          <Row className={`justify-content-start flex-wrap mt-3 ${"Disable"}`}>
             {allGameList.filter((item) =>
-                item.description.toLowerCase().includes(searchTerm.toLowerCase())
-              )
-              .map((item) => (
-                <div className="content">
-                  <div className="provider_name">{item.description}</div>
-                  <Link to={`/providerList/${item.game_code}`}>
-                      <img
-                        alt="Image Not Found"
-                        src={item.game_img ? CONSTANT.ImageUrl + item.game_img : require("../../assets/img/No_Image_Available.jpg")}
-                      />
-                  </Link>
-                </div>
-              ))}
-          </div>
+              item.description.toLowerCase().includes(searchTerm.toLowerCase())
+            ).map((item) => (
+              <Col md="3" xs="6" id="provider_card_hwe">
+                <div className="provider_name">{item.description}</div>
+                <Card className="provider_card">
+                  <CardHeader>
+                    <img
+                      alt="Image Not Found"
+                      className="slider_image"
+                      src={item.game_img ? CONSTANT.ImageUrl + item.game_img : require("../../assets/img/No_Image_Available.jpg")}
+                    />
+                  </CardHeader>
+                  <CardBody>
+                    <CardTitle tag="h5">{item.game_name}</CardTitle>
+                    <CardSubtitle className="mb-2" tag="p">
+                      {item.provider_code}
+                    </CardSubtitle>
+                    <CardSubtitle className="mb-2" tag="p">
+                      {item.game_type}
+                    </CardSubtitle>
+                  </CardBody>
+                </Card>
+              </Col>
+            ))}
+          </Row>
         }
       </Container>
 
@@ -168,7 +187,7 @@ function IndexNavbar() {
           <div className="navbar-translate">
             <NavbarBrand
               id="navbar-brand"
-            > 
+            >
               <Link to="/MYCASINO"><h3 className="logo_brand">{setpath}</h3></Link>
             </NavbarBrand>
             <Nav className="toggle_content_hwe">

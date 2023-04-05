@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { FaAngleLeft } from 'react-icons/fa';
 import * as CONSTANT from '../../BaseURL';
 import MyPagination from 'components/Pagination/MyPagination.js'
+import GameDetail from "components/Gamedetail/Gamedetails";
+import './css/providerlist.css';
 import {
   Nav,
   Container,
@@ -15,9 +17,11 @@ import {
   CardTitle,
   CardSubtitle
 } from "reactstrap";
-import './css/providerlist.css';
 
 function EvolutionList() {
+  // For Game Details Page
+  const [gamecode, setGameCode] = useState('');
+  const [datalist, setDataList] = useState('');
 
   // Get Provider Code
   const pathname = window.location.pathname.split("/");
@@ -72,12 +76,12 @@ function EvolutionList() {
 
 
   // Get data from child to parent
-  function callBack(childData) { 
+  function callBack(childData) {
     disableBtnDate();
 
     setcurrent_page(childData);
-    
-    if(childData == first_page){
+
+    if (childData == first_page) {
       setPrevBtn("disabled");
     }
     if (childData == last_page) {
@@ -89,9 +93,9 @@ function EvolutionList() {
 
     if (current_page > first_page) {
       setcurrent_page(current_page - 1);
-    } 
+    }
 
-    if (current_page-1 == first_page) {
+    if (current_page - 1 == first_page) {
       setPrevBtn("disabled")
     }
 
@@ -101,20 +105,36 @@ function EvolutionList() {
 
     if (current_page < last_page) {
       setcurrent_page(current_page + 1);
-    }     
+    }
 
-    if (current_page+1 == last_page) {
+    if (current_page + 1 == last_page) {
       setNextBtn("disabled");
-    }    
+    }
   }
-  function disableBtnDate(){
+  function disableBtnDate() {
     setPrevBtn("");
     setNextBtn("");
   }
 
+  // Open Game Details
+  function OpenGameDetail(gameCode) {
+    var gamecode = gameCode;
+    setGameCode(gamecode);
+
+    for (let i = 0; i < evolutionlist.length; i++) {
+      if (gamecode == evolutionlist[i].game_code) {
+        setDataList(evolutionlist[i]);
+      }
+    };
+
+    let list = document.getElementById("game-detail");
+    list.classList.remove("open-detail-list");
+  };
+
   return (
     <>
       <div className={"loading " + loaderdisable}>Loading&#8230;</div>
+      <GameDetail gameCode={gamecode} data={datalist} />
       <Container id="Evolution_games" className="container_fluid_hwe">
         <Nav>
           <Link to="/MYCASINO">
@@ -131,14 +151,14 @@ function EvolutionList() {
             evolutionlist.map((items) => {
               return (
                 <Col md="3" xs="6" id="evolution_card_hwe">
-                  <Card className="evolution_card">
+                  <Card className="evolution_card" onClick={(e) => OpenGameDetail(items.game_code)}>
                     <CardHeader>
                       <img
                         alt="Image Not Found"
                         src={items.game_img ? CONSTANT.ImageUrl + items.game_img : require("../../assets/img/No_Image_Available.jpg")}
                       />
                     </CardHeader>
-                    <CardBody>
+                    <CardBody>  
                       <CardTitle tag="h5">{items.game_name}</CardTitle>
                       <CardSubtitle className="mb-2" tag="p">
                         {items.provider_code}
@@ -162,7 +182,7 @@ function EvolutionList() {
       </Container>
       <div className={`pagination mb-2 ${evolutionlist == "" ? "provider_list_pagination" : ""}`} >
         <button onClick={pageDecrease} className={"PrevNextBtn " + prevBtn} id="PrevBtn" disabled={prevBtn ? true : false}>Prev</button>
-          <MyPagination totalItem={total_rows} itemPerPage={itemPerPage} handleCallBack={callBack} current_page={current_page} />
+        <MyPagination totalItem={total_rows} itemPerPage={itemPerPage} handleCallBack={callBack} current_page={current_page} />
         <button onClick={pageIncrease} className={"PrevNextBtn " + nextBtn} disabled={nextBtn ? true : false}>Next</button>
       </div>
     </>
