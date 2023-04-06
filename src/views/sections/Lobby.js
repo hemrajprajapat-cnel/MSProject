@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Link } from "react-router-dom";
 import { Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -61,12 +62,6 @@ function Lobby() {
       })
   }, [])
 
-  // Open Provider List
-  const OpenProviderList = () => {
-    let list = document.getElementById("search_provider_games");
-    list.classList.remove("providerList");
-  };
-
   // OpenGameDetails
   function OpenGameDetail(gameCode, key) {
     var gamecode = gameCode;
@@ -104,7 +99,7 @@ function Lobby() {
             <Button
               className="show_more"
               type="button"
-              onClick={OpenProviderList}
+              tag={Link} to="/showmore/NEW"
             >
               SHOW MORE
             </Button>
@@ -182,7 +177,7 @@ function Lobby() {
             <Button
               className="show_more"
               type="button"
-              onClick={OpenProviderList}
+              tag={Link} to="/showmore/POPULARITY"
             >
               SHOW MORE
             </Button>

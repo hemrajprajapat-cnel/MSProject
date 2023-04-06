@@ -29,7 +29,9 @@ import "assets/demo/nucleo-icons-page-styles.css?v=1.5.0";
 import Home from "views/Home.js";
 import Captcha from "views/sections/auth/Captcha.js";
 import Slot from "views/sections/Slots.js";
+import Gameprovider from "views/sections/GameProvider.js";
 import EvolutionList from "views/sections/ProviderList.js";
+import Showmore from "views/sections/ShowMoreGames.js";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root")
@@ -52,8 +54,16 @@ root.render(
           render={(props) => <Slot {...props} />}
         />
         <Route
+          path="/gameprovider"
+          render={(props) => <Gameprovider {...props} />}
+        />
+        <Route
           path="/providerList"
           render={(props) => <EvolutionList {...props} />}
+        />
+         <Route 
+          path="/showmore" 
+          render={(props) => <Showmore {...props} />} 
         />
         <Redirect to="/captcha" />
         <Redirect from="/" to="/captcha" />
@@ -61,3 +71,4 @@ root.render(
     </Switch>
   </BrowserRouter>
 );
+

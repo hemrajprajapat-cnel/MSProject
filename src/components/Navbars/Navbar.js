@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaAngleLeft } from 'react-icons/fa';
-import * as CONSTANT from '../../BaseURL';
 import {
   Button,
   Collapse,
@@ -14,34 +12,11 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  Row,
-  Col,
 } from "reactstrap";
 import './navbar.css';
-import $ from "jquery";
 
-function IndexNavbar() {
+function Navigationbar() {
   const [setpath, setpathname] = useState([]);
-  const [setprovider, setProviderList] = useState([]);
-  const [allGameList, setAllGameList] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-
-  // Open Provider List 
-  const OpenProviderList = () => {
-    let list = document.getElementById("search_provider_games");
-    list.classList.remove("providerList");
-  };
-  const closeProviderList = () => {
-    $('#search-Terms').val("");
-    setSearchTerm("");
-    let list = document.getElementById("search_provider_games");
-    list.classList.add("providerList");
-  };
 
   React.useEffect(() => {
     var pathname = window.location.pathname;
@@ -50,138 +25,10 @@ function IndexNavbar() {
     } else if (pathname == '/SLOT') {
       setpathname("My Slots");
     }
-
-    // Provider List API
-    fetch(`${CONSTANT.BaseUrl}get-provider-list`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        setProviderList(json.provider);
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-
-    // Search API
-    fetch(`${CONSTANT.BaseUrl}get-all-game`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        setAllGameList(json.game);
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-
   }, []);
-
-  // On Search Function
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
 
   return (
     <>
-      <Container id="search_provider_games" className="container_fluid_hwe providerList">
-        <Nav className="nav_search">
-          <InputGroup>
-            <InputGroupAddon addonType="prepend" onClick={closeProviderList}>
-              <InputGroupText className="angleleft">
-                <FaAngleLeft />
-              </InputGroupText>
-            </InputGroupAddon>
-            <InputGroupAddon addonType="prepend">
-              <InputGroupText className="search_icon">
-                <i className="fa fa-search"></i>
-              </InputGroupText>
-            </InputGroupAddon>
-            <Input
-              placeholder="Games Providers, Types etc."
-              type="text"
-              className="search_filter search_provider"
-              id="search-Terms"
-              onChange={(e) => handleSearch(e)}
-            ></Input> <br />
-          </InputGroup>
-        </Nav>
-
-        {searchTerm.length < 3 ?
-          <div>
-            <Nav className="game_providers_btn">
-              <p className="mb-1">Please enter at least 3 correctors</p>
-            </Nav>
-            <Nav className="game_providers_btn">
-              <Button id="search-btn">Game Providers</Button>
-            </Nav>  
-          </div>
-          : null
-        }
-
-        {searchTerm.length < 3 ?
-          <div className="provider_content">
-            {setprovider != "" ?
-              setprovider.map((gameprovider) => {
-                return (
-                  <div className="content">
-                    <div className="provider_name">{gameprovider.name}</div>
-                    <Link to={`/providerList/${gameprovider.name}/${gameprovider.code}`}>
-                      <img
-                        alt="Image Not Found"
-                        src={`${CONSTANT.ProviderGameImg + gameprovider.code}.png` ? `${CONSTANT.ProviderGameImg + gameprovider.code}.png` : require("../../assets/img/No_Image_Available.jpg")}
-                      />
-                    </Link>
-                  </div>
-                );
-              })
-              : <Nav className="Not_found">
-                <img
-                  alt="Image Not Found"
-                  src={require("../../assets/img/data_not_found.png")}
-                />
-              </Nav>
-            }
-          </div>
-          :
-          <Row className={`justify-content-start flex-wrap mt-3 ${"Disable"}`}>
-            {allGameList.filter((item) =>
-              item.description.toLowerCase().includes(searchTerm.toLowerCase())
-            ).map((item) => (
-              <Col md="3" xs="6" id="provider_card_hwe">
-                <div className="provider_name">{item.description}</div>
-                <Card className="provider_card">
-                  <CardHeader>
-                    <img
-                      alt="Image Not Found"
-                      className="slider_image"
-                      src={item.game_img ? CONSTANT.ImageUrl + item.game_img : require("../../assets/img/No_Image_Available.jpg")}
-                    />
-                  </CardHeader>
-                  <CardBody>
-                    <CardTitle tag="h5">{item.game_name}</CardTitle>
-                    <CardSubtitle className="mb-2" tag="p">
-                      {item.provider_code}
-                    </CardSubtitle>
-                    <CardSubtitle className="mb-2" tag="p">
-                      {item.game_type}
-                    </CardSubtitle>
-                  </CardBody>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        }
-      </Container>
-
       <Navbar className="navbar_hwe fixed-top navbar-transparent" expand="lg" color="white">
         <Container className="container_fluid_hwe">
           <div className="navbar-translate">
@@ -191,13 +38,7 @@ function IndexNavbar() {
               <Link to="/MYCASINO"><h3 className="logo_brand">{setpath}</h3></Link>
             </NavbarBrand>
             <Nav className="toggle_content_hwe">
-              <button
-                className="navbar-toggler navbar-toggler"
-                onClick={OpenProviderList}
-                type="button"
-              >
-                <i className="fa fa-search"></i>
-              </button>
+              <Link to="/gameprovider"><i className="fa fa-search"></i></Link>
               <Link to="/login"><i className="fa fa-user-circle ml-3"></i></Link>
             </Nav>
           </div>
@@ -207,19 +48,19 @@ function IndexNavbar() {
             navbar
           >
             <Nav navbar></Nav>
-            <Nav navbar className="nav_search">
-              <InputGroup onClick={OpenProviderList}>
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText>
-                    <i className="fa fa-search"></i>
-                  </InputGroupText>
-                </InputGroupAddon>
-                <Input
-                  placeholder="Search here"
-                  type="text"
-                  className="search_filter"
-                ></Input>
-              </InputGroup>
+            <Nav navbar className="nav_search" tag={Link} to="/gameprovider">              
+                <InputGroup>
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="fa fa-search"></i>
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    placeholder="Search here"
+                    type="text"
+                    className="search_filter"
+                  />
+                </InputGroup>              
             </Nav>
             <Nav navbar>
               <NavItem>
@@ -240,4 +81,5 @@ function IndexNavbar() {
   );
 }
 
-export default IndexNavbar;
+export default Navigationbar;
+

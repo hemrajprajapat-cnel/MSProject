@@ -137,7 +137,7 @@ function EvolutionList() {
       <GameDetail gameCode={gamecode} data={datalist} />
       <Container id="Evolution_games" className="container_fluid_hwe">
         <Nav>
-          <Link to="/MYCASINO">
+          <Link to="/gameprovider">
             <InputGroupText className="angleleft">
               <FaAngleLeft />
             </InputGroupText>
