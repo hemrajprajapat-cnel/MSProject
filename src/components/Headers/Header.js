@@ -6,9 +6,15 @@ import { Container } from "reactstrap";
 // core components
 import * as CONSTANT from "../../BaseURL";
 import "./banner.css";
+import MYCASINO from "../../assets/img/my-casino-icon.svg"
+import SLOT from "../../assets/img/slot-icon.svg"
 
 function IndexHeader() {
   let pageHeader = React.createRef();
+
+  let pathname = window.location.pathname;
+  let path = pathname.replace("/", "");
+  const [setpath, setpathname] = useState(path);
 
   const [category, setCategory] = useState([]);
   const [categoryClass, setCategoryClass] = useState();
@@ -39,7 +45,8 @@ function IndexHeader() {
         <div
           className="page-header-image"
           style={{
-            backgroundImage: "url(" + require("assets/img/banner.jpg") + ")",
+            backgroundImage: setpath == "MYCASINO" ? "url(" + require("assets/img/mycasino.jpg") + ")" : "url(" + require("assets/img/banner.jpg") + ")",
+            backgroundPosition: setpath == "MYCASINO" ? "unset" : "center center",
           }}
           ref={pageHeader}
         ></div>
@@ -52,10 +59,13 @@ function IndexHeader() {
             {category.map((category) => {
               return (
                 <Link to={category.code}>
-                  <div className="lessCategory">
+                  <div className="lessCategory" style={{ background: category.code == setpath ? "#A71AE5" : "linear-gradient(to bottom, #0082ff, #0075fa, #0067f4, #0258ed, #1a49e5)" }}>
                     <div className="banner_description">
-                      <i className="fa fa-building"></i>
-                      <p>{category.name}</p>
+                      <img
+                        alt="Image Not Found"
+                        src={category.code == "MYCASINO" ? MYCASINO : SLOT}
+                      />
+                      <p style={{ color: category.code == setpath ? "#FFFFFF" : "#CEE7FF" }}>{category.name}</p>
                     </div>
                   </div>
                 </Link>

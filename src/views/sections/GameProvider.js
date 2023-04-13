@@ -155,7 +155,7 @@ function GameProvider() {
                         {allGameList.filter((item) =>
                             item.description.toLowerCase().includes(searchTerm.toLowerCase())
                         ).map((item) => (
-                            <Col md="3" xs="6" id="provider_card_hwe">
+                            <Col id="provider_card_hwe" className="hwe_each_card_adjust">
                                 <div className="provider_name">{item.description}</div>
                                 <Card className="provider_card" onClick={(e) => OpenGameDetail(item.game_code)}>
                                     <CardHeader>
@@ -164,6 +164,7 @@ function GameProvider() {
                                             className="slider_image"
                                             src={item.game_img ? CONSTANT.ImageUrl + item.game_img : require("../../assets/img/No_Image_Available.jpg")}
                                         />
+                                        {item.demo == 1 ? <button>Demo</button> : null}
                                     </CardHeader>
                                     <CardBody>
                                         <CardTitle tag="h5">{item.game_name}</CardTitle>

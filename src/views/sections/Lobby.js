@@ -6,7 +6,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 import * as CONSTANT from '../../BaseURL';
 import GameDetail from "components/Gamedetail/Gamedetails";
-import "../../components/Loader/loader.css";
 import $ from "jquery";
 import "./css/lobby.css";
 import {
@@ -88,7 +87,6 @@ function Lobby() {
 
   return (
     <>
-      <div className={"loading " + loaderdisable}>Loading&#8230;</div>
       <GameDetail gameCode={gamecode} data={datalist} />
       <Container className="container_fluid_hwe carousel_content carousel_content_lobby">
         <Row className="mb-3 inner">
@@ -121,7 +119,7 @@ function Lobby() {
                 },
                 1200: {
                   width: 1200,
-                  slidesPerView: 4,
+                  slidesPerView: 5,
                   spaceBetween: 30
                 },
               }}
@@ -134,6 +132,7 @@ function Lobby() {
                       className="slider_image"
                       src={newly.game_img ? CONSTANT.ImageUrl + newly.game_img : require("../../assets/img/No_Image_Available.jpg")}
                     />
+                    {newly.demo == 1 ? <button>Demo</button> : null}
                   </CardHeader>
                   <CardBody>
                     <CardTitle tag="h5">
@@ -199,7 +198,7 @@ function Lobby() {
                 },
                 1200: {
                   width: 1200,
-                  slidesPerView: 4,
+                  slidesPerView: 5,
                   spaceBetween: 30
                 },
               }}
@@ -211,6 +210,7 @@ function Lobby() {
                       alt="Image Not Found"
                       src={popular.game_img ? CONSTANT.ImageUrl + popular.game_img : require("../../assets/img/No_Image_Available.jpg")}
                     />
+                    {popular.demo == 1 ? <button>Demo</button> : null}
                   </CardHeader>
                   <CardBody>
                     <CardTitle tag="h5">

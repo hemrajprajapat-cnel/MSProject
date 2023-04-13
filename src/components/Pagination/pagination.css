@@ -1,46 +1,40 @@
-/* pagination */
-.pagination {
+/* React Paginate */
+
+.reactPaginate {
   display: flex;
   justify-content: center;
-  margin-top: 50
 }
 
-.pagination button,
-.paginationButton {
-  border: none;
-  background: none;
-  padding: 5px 7px;
-  border: 1px solid #3880F7;
-  border-radius: 4px;
-  margin: 1px;
+.reactPaginate li {
+  list-style: none;
+  margin-left: 7px;
+  cursor: pointer;
+  font-size: 20px;
+  border: 1px solid #2748DC;  
+  border-radius: 5px;  
+  padding: 2px 5px;
+}
+
+.reactPaginate li a {
+  text-decoration: none;
   color: #2748DC;
-  font-weight: 600;
+  padding: 5px 8px;
 }
 
-.slote_pagination {
-  display: none !important;
+.selected,
+.previous,
+.next{
+  background-color: #2748DC;
 }
 
-.PrevNextBtn,
-.activePage{
-  background-color: #2748DC !important;
+.selected a,
+.previous a,
+.next a{
   color: #fff !important;
-  border: none !important;
+  border: none;
 }
 
 .disabled{
-  background-color: #9aa1be !important; 
-}
-
-/* end */
-
-
-@media only screen and (min-width: 450px) {
-
-  .pagination button,
-  .paginationButton {
-    padding: 7px 10px;
-    margin: 3px;
-  }
-
+  background-color: #9aa1be; 
+  border: none !important;
 }

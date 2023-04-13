@@ -34,13 +34,8 @@ function EvolutionList() {
   const [evolutionlist, setEvolutionList] = useState([]);
 
   // Pagination Data
-  const [first_page, setfirst_page] = React.useState();
   const [last_page, setlast_page] = React.useState();
   const [current_page, setcurrent_page] = React.useState(1);
-  const [total_rows, settotal_rows] = React.useState();
-  const [itemPerPage, setItemPerPage] = React.useState(25);
-  const [prevBtn, setPrevBtn] = React.useState("disabled");
-  const [nextBtn, setNextBtn] = React.useState("");
 
   // Disable Loader
   const [loaderdisable, setLoaderDisable] = useState();
@@ -64,10 +59,7 @@ function EvolutionList() {
 
         setLoaderDisable("loaderDisable")
 
-        setfirst_page(json.pagination.first_page);
         setlast_page(json.pagination.last_page);
-        setcurrent_page(json.pagination.current_page);
-        settotal_rows(json.pagination.total_rows);
       })
       .catch((error) => {
         console.log(error)
@@ -75,46 +67,10 @@ function EvolutionList() {
   };
 
 
-  // Get data from child to parent
-  function callBack(childData) {
-    disableBtnDate();
-
-    setcurrent_page(childData);
-
-    if (childData == first_page) {
-      setPrevBtn("disabled");
-    }
-    if (childData == last_page) {
-      setNextBtn("disabled");
-    }
-  }
-  function pageDecrease() {
-    disableBtnDate();
-
-    if (current_page > first_page) {
-      setcurrent_page(current_page - 1);
-    }
-
-    if (current_page - 1 == first_page) {
-      setPrevBtn("disabled")
-    }
-
-  }
-  function pageIncrease() {
-    disableBtnDate();
-
-    if (current_page < last_page) {
-      setcurrent_page(current_page + 1);
-    }
-
-    if (current_page + 1 == last_page) {
-      setNextBtn("disabled");
-    }
-  }
-  function disableBtnDate() {
-    setPrevBtn("");
-    setNextBtn("");
-  }
+  // Pagination Handle Change
+  function handlePageClick({ selected }) {
+    setcurrent_page(selected + 1);
+  };
 
   // Open Game Details
   function OpenGameDetail(gameCode) {
@@ -150,15 +106,16 @@ function EvolutionList() {
           {evolutionlist != "" ?
             evolutionlist.map((items) => {
               return (
-                <Col md="3" xs="6" id="evolution_card_hwe">
+                <Col id="evolution_card_hwe" className="hwe_each_card_adjust">
                   <Card className="evolution_card" onClick={(e) => OpenGameDetail(items.game_code)}>
                     <CardHeader>
                       <img
                         alt="Image Not Found"
                         src={items.game_img ? CONSTANT.ImageUrl + items.game_img : require("../../assets/img/No_Image_Available.jpg")}
                       />
+                      {items.demo == 1 ? <button>Demo</button> : null}
                     </CardHeader>
-                    <CardBody>  
+                    <CardBody>
                       <CardTitle tag="h5">{items.game_name}</CardTitle>
                       <CardSubtitle className="mb-2" tag="p">
                         {items.provider_code}
@@ -180,11 +137,15 @@ function EvolutionList() {
           }
         </Row>
       </Container>
-      <div className={`pagination mb-2 ${evolutionlist == "" ? "provider_list_pagination" : ""}`} >
-        <button onClick={pageDecrease} className={"PrevNextBtn " + prevBtn} id="PrevBtn" disabled={prevBtn ? true : false}>Prev</button>
-        <MyPagination totalItem={total_rows} itemPerPage={itemPerPage} handleCallBack={callBack} current_page={current_page} />
-        <button onClick={pageIncrease} className={"PrevNextBtn " + nextBtn} disabled={nextBtn ? true : false}>Next</button>
-      </div>
+
+      <Container>
+        <Row>
+          <Col md="12">
+            <MyPagination pageCount={last_page} handlePageClick={handlePageClick} />
+          </Col>
+        </Row>
+      </Container>
+
     </>
   );
 }

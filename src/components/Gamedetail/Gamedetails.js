@@ -11,9 +11,10 @@ function GameDetail(props) {
     // Hide Show Popup And detail List Function
     const detailList = (value) => {
         if (value == "add") {
-            setDetailList("");
+            //setDetailList("");
+			$('.hwe_slide_bar').toggle( "slide" );
         } else if (value == "remove") {
-            setDetailList("detail_list");
+            $('.hwe_slide_bar').toggle( "slide" );
         } else if (value == "removelist") {
             let list = document.getElementById("game-detail");
             list.classList.add("open-detail-list");
@@ -23,15 +24,16 @@ function GameDetail(props) {
 
     return (
         <>
+		    <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
             <div id="game-detail" className="container-fluid open-detail-list">
                 <BsXCircleFill className="removepopup" onClick={(e) => detailList("removelist")} />
                 <BsPlusCircle className="adddetail" onClick={(e) => detailList("add")} />
                 <img alt="Image Not Found" src={require("../../assets/img/game_detail_back_img.png")} />
-                <div className={`inner-data ${detail_list}`}>
+                <div className="inner-data hwe_slide_bar">
                     <div className="inner-text">
                         <BsXCircleFill className="removedetail" onClick={(e) => detailList("remove")} />
                         <div className="inner-title">{props.data.game_name}</div>
-                        <label>{props.data.game_code}</label>
+                        <label>{props.data.provider_code}</label>
                         <p className="inner-description">
                         </p>
                         <div className="inner-game-feature">
@@ -58,9 +60,9 @@ function GameDetail(props) {
                                 </div>
                             </div>
                             <div className="row">
-                                <label class="col-6 label-title">Provider Code:</label>
+                                <label class="col-6 label-title">Release Date:</label>
                                 <div className="col-6 label-content">
-                                    {props.data.provider_code}
+                                    {props.data.release_date}
                                 </div>
                             </div>
                             <hr />

@@ -17,7 +17,9 @@ import {
   CardBody,
   CardTitle,
   CardSubtitle,
+  Container,
 } from "reactstrap";
+import zIndex from "@mui/material/styles/zIndex";
 
 function Slots() {
   // For Game Details Page
@@ -35,22 +37,17 @@ function Slots() {
   const [filterList, setFilterList] = React.useState();
 
   // Pagination Data
-  const [first_page, setfirst_page] = React.useState();
   const [last_page, setlast_page] = React.useState();
   const [current_page, setcurrent_page] = React.useState(1);
-  const [total_rows, settotal_rows] = React.useState();
-  const [itemPerPage, setItemPerPage] = React.useState(50);
-  const [prevBtn, setPrevBtn] = React.useState("disabled");
-  const [nextBtn, setNextBtn] = React.useState("");
 
   // Provider Filter
   const [sortBy, setsortBy] = useState(["popularity"]);
-  const [provider, setprovider] = useState([]);
-  const [game_type, setgame_type] = useState([]);
-  const [currency, setcurrency] = useState([]);
-  const [feature, setfeature] = useState([]);
-  const [theme, settheme] = useState([]);
-  const [volatility, setvolatility] = useState([]);
+  const [provider, setprovider] = useState('');
+  const [game_type, setgame_type] = useState('');
+  const [currency, setcurrency] = useState('');
+  const [feature, setfeature] = useState('');
+  const [theme, settheme] = useState('');
+  const [volatility, setvolatility] = useState('');
 
   // function for open filter list
   const OpenfilterList = () => {
@@ -83,10 +80,83 @@ function Slots() {
 
         setGameLength(json.game_list.items.length)
 
-        setfirst_page(json.game_list.pagination.first_page);
         setlast_page(json.game_list.pagination.last_page);
-        setcurrent_page(json.game_list.pagination.current_page);
-        settotal_rows(json.game_list.pagination.total_rows);
+
+
+        // For filter, when filter not available while set filter
+
+        if (json.filter_list.provider == "") {
+          setprovider("");
+        }
+        else{   
+          $(".provider").removeClass("active");       
+          for (let i = 0; i < json.filter_list.provider.length; i++) {
+            if(json.filter_list.provider[i] == provider){             
+              $(".provider" + i).addClass("active");
+            }             
+          } 
+        }
+
+        if (json.filter_list.game_type == "") {
+          setgame_type("");
+        }
+        else{   
+          $(".game_type").removeClass("active");       
+          for (let i = 0; i < json.filter_list.game_type.length; i++) {
+            if(json.filter_list.game_type[i] == game_type){             
+              $(".game_type" + i).addClass("active");
+            }             
+          } 
+        }
+
+        if (json.filter_list.currency == "") {
+          setcurrency("");
+        }
+        else{   
+          $(".currency").removeClass("active");       
+          for (let i = 0; i < json.filter_list.currency.length; i++) {
+            if(json.filter_list.currency[i] == currency){             
+              $(".currency" + i).addClass("active");
+            }             
+          } 
+        }
+
+        if (json.filter_list.feature == "") {
+          setfeature("");
+        }
+        else{   
+          $(".feature").removeClass("active");       
+          for (let i = 0; i < json.filter_list.feature.length; i++) {
+            if(json.filter_list.feature[i] == feature){             
+              $(".feature" + i).addClass("active");
+            }             
+          } 
+        }
+
+        if (json.filter_list.theme == "") {
+          settheme("");
+        }
+        else{   
+          $(".theme").removeClass("active");       
+          for (let i = 0; i < json.filter_list.theme.length; i++) {
+            if(json.filter_list.theme[i] == theme){             
+              $(".theme" + i).addClass("active");
+            }             
+          } 
+        }
+
+        if (json.filter_list.volatility == "") {
+          setvolatility("");
+        }
+        else{   
+          $(".volatility").removeClass("active");       
+          for (let i = 0; i < json.filter_list.volatility.length; i++) {
+            if(json.filter_list.volatility[i] == volatility){             
+              $(".volatility" + i).addClass("volatility");
+            }             
+          } 
+        }
+
       })
       .catch((error) => {
         console.log(error)
@@ -96,7 +166,6 @@ function Slots() {
   // Onload And also onchange
   React.useEffect(() => {
     getGameList();
-
     document.body.classList.add("index-page");
     document.body.classList.add("sidebar-collapse");
     document.documentElement.classList.remove("nav-open");
@@ -107,50 +176,17 @@ function Slots() {
   }, [sortBy, current_page, provider, game_type, currency, feature, theme, volatility]);
 
 
-  // For Pagination & get data from child to parent
-  function callBack(childData) {
-    disableBtnDate();
-
-    setcurrent_page(childData);
-
-    if (childData == first_page) {
-      setPrevBtn("disabled");
-    }
-    if (childData == last_page) {
-      setNextBtn("disabled");
-    }
-  }
-  function pageDecrease() {
-    disableBtnDate();
-
-    if (current_page > first_page) {
-      setcurrent_page(current_page - 1);
-    }
-
-    if (current_page - 1 == first_page) {
-      setPrevBtn("disabled")
-    }
-
-  }
-  function pageIncrease() {
-    disableBtnDate();
-
-    if (current_page < last_page) {
-      setcurrent_page(current_page + 1);
-    }
-
-    if (current_page + 1 == last_page) {
-      setNextBtn("disabled");
-    }
-  }
-  function disableBtnDate() {
-    setPrevBtn("");
-    setNextBtn("");
-  }
+  // Pagination Handle Change
+  function handlePageClick({ selected }) {
+    setcurrent_page(selected + 1);
+  };
 
   // For Filter Data
   function sortByValue(index) {
     setcurrent_page(1);
+    $(".reactPaginate > li").removeClass("selected");
+    $(".reactPaginate > li:nth-child(2)").addClass("selected");
+
     setLoaderDisable("")
     if (index == 1) {
       setsortBy("new");
@@ -160,25 +196,54 @@ function Slots() {
       setsortBy("alphabetical");
     }
   }
-  function slotFilter(value, key) {
+
+  async function slotFilter(value, filternumber, key)  {
     setcurrent_page(1);
-    if (key == 1) {
-      setprovider(value);
-    } else if (key == 2) {
-      setgame_type(value);
-    } else if (key == 3) {
-      setcurrency(value);
-    } else if (key == 4) {
-      setfeature(value);
-    } else if (key == 5) {
-      settheme(value);
-    } else if (key == 6) {
-      setvolatility(value);
+    $(".reactPaginate > li").removeClass("selected");
+    $(".reactPaginate > li:nth-child(2)").addClass("selected");
+
+    if (filternumber == 1) {
+      if (value != provider) {
+        setprovider(value);
+      } else {
+        setprovider("");
+      }
+    } else if (filternumber == 2) {
+      if (value != game_type) {
+        setgame_type(value);
+      } else {
+        setgame_type("");
+      }
+    } else if (filternumber == 3) {
+      if (value != currency) {
+        setcurrency(value);
+      } else {
+        setcurrency("");
+      }
+    } else if (filternumber == 4) {
+      if (value != feature) {
+        setfeature(value);
+      } else {
+        setfeature("");
+      }
+    } else if (filternumber == 5) {
+      if (value != theme) {
+        settheme(value);
+      } else {
+        settheme("");
+      }
+    } else if (filternumber == 6) {
+      if (value != volatility) {
+        setvolatility(value);
+      } else {
+        setvolatility("");
+      }
     }
   }
 
   // OpenGameDetails
   function OpenGameDetail(gameCode) {
+    closeFilterList();
     var gamecode = gameCode;
     setGameCode(gamecode);
 
@@ -242,9 +307,9 @@ function Slots() {
                   ></i>
                   <div style={{ width: '100%', height: '100vh', overflowY: 'scroll' }} className="filterInner">
                     <h6>Game Provider</h6>
-                    {filterList?.provider.map((provider) => {
+                    {filterList?.provider.map((provider, key) => {
                       return (
-                        <Button className="short provider" type="button" onClick={e => slotFilter(provider, 1)}>
+                        <Button className={`short provider provider${key}`} type="button" onClick={e => slotFilter(provider, 1, key)}>
                           {provider}
                         </Button>
                       );
@@ -252,45 +317,45 @@ function Slots() {
 
                     <h6>Game Type</h6>
                     <div style={{ maxHeight: "500px", overflowY: "scroll", scrollbarWidth: "thin" }}>
-                      {filterList?.game_type.map((game_type) => {
+                      {filterList?.game_type.map((game_type, key) => {
                         return (
-                          <Button className="short game_type" type="button" onClick={e => slotFilter(game_type, 2)}>
+                          <Button className={`short game_type game_type${key}`} type="button" onClick={e => slotFilter(game_type, 2, key)}>
                             {game_type}
                           </Button>
                         );
                       })}
                     </div>
                     <h6>Currency</h6>
-                    {filterList?.currency.map((currency) => {
+                    {filterList?.currency.map((currency, key) => {
                       return (
-                        <Button className="short currency" type="button" onClick={e => slotFilter(currency, 3)}>
+                        <Button className={`short currency currency${key}`} type="button" onClick={e => slotFilter(currency, 3, key)}>
                           {currency}
                         </Button>
                       );
                     })}
 
                     <h6>Game feature</h6>
-                    {filterList?.feature.map((feature) => {
+                    {filterList?.feature.map((feature, key) => {
                       return (
-                        <Button className="short feature" type="button" onClick={e => slotFilter(feature, 4)}>
+                        <Button className={`short feature feature${key}`} type="button" onClick={e => slotFilter(feature, 4, key)}>
                           {feature}
                         </Button>
                       );
                     })}
 
                     <h6>Game theme</h6>
-                    {filterList?.theme.map((theme) => {
+                    {filterList?.theme.map((theme, key) => {
                       return (
-                        <Button className="short theme" type="button" onClick={e => slotFilter(theme, 5)}>
+                        <Button className={`short theme theme${key}`} type="button" onClick={e => slotFilter(theme, 5, key)}>
                           {theme}
                         </Button>
                       );
                     })}
 
                     <h6>Game volatility</h6>
-                    {filterList?.volatility.map((volatility) => {
+                    {filterList?.volatility.map((volatility, key) => {
                       return (
-                        <Button className="short volatility" type="button" onClick={e => slotFilter(volatility, 6)}>
+                        <Button className={`short volatility volatility${key}`} type="button" onClick={e => slotFilter(volatility, 6, key)}>
                           {volatility}
                         </Button>
                       );
@@ -310,13 +375,14 @@ function Slots() {
               {slotGamelist != "" ?
                 slotGamelist.map((item) => {
                   return (
-                    <Col md="3" sm="6" xs="6" id="unic_card_hwe">
+                    <Col id="unic_card_hwe" className="hwe_each_card_adjust">
                       <Card className="slote_card" onClick={(e) => OpenGameDetail(item.game_code)}>
                         <CardHeader>
                           <img
                             alt="Image Not Found"
                             src={item.game_img ? CONSTANT.ImageUrl + item.game_img : require("../../assets/img/No_Image_Available.jpg")}
                           />
+                          {item.demo == 1 ? <button>Demo</button> : null}
                         </CardHeader>
                         <CardBody>
                           <CardTitle tag="h5">{item.game_name}</CardTitle>
@@ -342,11 +408,15 @@ function Slots() {
           </div>
         </div>
       </div>
-      <div className={`pagination mt-2 ${slotGamelist == "" ? "slote_pagination" : ""}`}>
-        <button onClick={pageDecrease} className={"PrevNextBtn " + prevBtn} id="PrevBtn" disabled={prevBtn ? true : false}>Prev</button>
-          <MyPagination totalItem={total_rows} itemPerPage={itemPerPage} handleCallBack={callBack} current_page={current_page} />
-        <button onClick={pageIncrease} className={"PrevNextBtn " + nextBtn} disabled={nextBtn ? true : false}>Next</button>
-      </div>
+
+      <Container>
+        <Row>
+          <Col md="12">
+            <MyPagination pageCount={last_page} handlePageClick={handlePageClick} />
+          </Col>
+        </Row>
+      </Container>
+
     </>
   );
 }

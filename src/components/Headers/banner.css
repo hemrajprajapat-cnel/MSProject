@@ -45,7 +45,6 @@
     justify-content: center;
     margin: 0 0.5rem;
     padding: 1rem;
-    background-image: linear-gradient(to bottom, #0082ff, #0075fa, #0067f4, #0258ed, #1a49e5);
     border-radius: 20px;
 }
 
@@ -53,10 +52,9 @@
     margin-right: 1rem;
 }
 
-.banner_content2,.banner_description i,
-.banner_content .banner_description i{
-    font-size: 30px;
-    cursor: pointer;
+.banner_content2,.banner_description img,
+.banner_content .banner_description img{
+    height: 35px;
 }
 
 .banner_content2,.banner_description p,

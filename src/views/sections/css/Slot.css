@@ -44,13 +44,30 @@
 }
 
 .slote_card .card-header {
-  height: 150px;
+  /*height: 150px;*/
   border: 1px solid;
+  position: relative;
 }
 
-.slote_card img {
+.slote_card .card-header img {
   width: 100%;
   height: 100%;
+}
+
+.slote_card .card-header button {
+  position: absolute;
+  bottom: 0px;
+  right: 0; 
+  z-index: 1; 
+  border: none;
+  padding: 4px 10px;
+  display: none;
+  border-radius: 3px;
+  box-shadow: 0px 0px 5px #000;
+}
+
+.slote_card:hover button {
+  display: block;
 }
 
 .slote_card .card-body {
@@ -154,6 +171,19 @@
   margin: 4rem 0;
 }
 
+#unic_card_hwe {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+
+@media (min-width: 768px){
+  .col-md-3 {
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+}
+
 @media only screen and (max-width: 450px) {
 
   .slot_tabs {
@@ -170,7 +200,7 @@
   }
 
   .slote_card .card-header {
-    height: 80px;
+    /*height: 80px;*/
   }
 
   .slote_card .card-body {
@@ -179,11 +209,6 @@
 
   .slot_gamelist {
     margin-top: 0.5rem;
-  }
-
-  #unic_card_hwe {
-    padding-left: 5px !important;
-    padding-right: 5px !important;
   }
 
 }
