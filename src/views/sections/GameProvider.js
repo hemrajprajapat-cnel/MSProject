@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { FaAngleLeft } from 'react-icons/fa';
 import * as CONSTANT from '../../BaseURL';
 import GameDetail from "components/Gamedetail/Gamedetails";
+import { BsXCircleFill } from "react-icons/bs";
+import $ from 'jquery';
 import {
     Button,
     Nav,
@@ -30,6 +32,10 @@ function GameProvider() {
     const [setprovider, setProviderList] = useState([]);
     const [allGameList, setAllGameList] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+
+    const [shownIframeModel, setShownIframeModel] = useState(false);
+    const [modelIframeURL, setModelIframeURL] = useState("");
+    const [foundLoader, setFoundLoader] = React.useState(false);
 
     React.useEffect(() => {
 
@@ -72,24 +78,64 @@ function GameProvider() {
     };
 
     // OpenGameDetails
-    function OpenGameDetail(gameCode) {
-        var gamecode = gameCode;
-        setGameCode(gamecode);
+    function OpenGameDetail(event, gameCode) {
+        event.preventDefault();
 
-        for (let i = 0; i < allGameList.length; i++) {
-            if (gamecode == allGameList[i].game_code) {
-                setDataList(allGameList[i]);
-            }
-        };
+        if (event.currentTarget.className === "provider_card card" && event.target.className !== "handleChildClickDemo") {
+            var gamecode = gameCode;
+            setGameCode(gamecode);
 
-        let list = document.getElementById("game-detail");
-        list.classList.remove("open-detail-list");
+            for (let i = 0; i < allGameList.length; i++) {
+                if (gamecode == allGameList[i].game_code) {
+                    setDataList(allGameList[i]);
+                }
+            };
+
+            let list = document.getElementById("game-detail");
+            list.classList.remove("open-detail-list");
+        }
     };
+
+    function handleChildClickDemo(event, gameCode, providerCode) { 
+    
+        setFoundLoader(true);
+        console.log(gameCode);
+        console.log(providerCode);
+        fetch(`${CONSTANT.BaseUrl}get-demo-url?provider_code=${providerCode}&game_code=${gameCode}`, {
+            method: 'GET',
+            /*body: JSON.stringify({
+            provider_code: providerCode,
+            game_code: gameCode
+            })
+            */
+        })
+        .then((res) => res.json())
+        .then((json) => {
+            if(json.url !== ""){
+            setTimeout(function(){
+                setFoundLoader(false);
+            }, 3000);
+            
+            setModelIframeURL(json.url);
+            setShownIframeModel(!shownIframeModel);
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    };
+
+    $('.demoModelCloseBT').click(function(){
+        setModelIframeURL("");
+        setShownIframeModel(!shownIframeModel);
+    });
 
     return (
         <>
             <GameDetail gameCode={gamecode} data={datalist} />
             <Container id="search_provider_games" className="container_fluid_hwe">
+                {foundLoader ? <div class="loader"></div>: null}
+                {shownIframeModel ? <VideoModal src={modelIframeURL}/> : null}
                 <Nav className="nav_search">
                     <InputGroup>
                         <InputGroupAddon addonType="prepend">
@@ -157,14 +203,14 @@ function GameProvider() {
                         ).map((item) => (
                             <Col id="provider_card_hwe" className="hwe_each_card_adjust">
                                 <div className="provider_name">{item.description}</div>
-                                <Card className="provider_card" onClick={(e) => OpenGameDetail(item.game_code)}>
+                                <Card className="provider_card" onClick={(e) => OpenGameDetail(e, item.game_code)}>
                                     <CardHeader>
                                         <img
                                             alt="Image Not Found"
                                             className="slider_image"
                                             src={item.game_img ? CONSTANT.ImageUrl + item.game_img : require("../../assets/img/No_Image_Available.jpg")}
                                         />
-                                        {item.demo == 1 ? <button>Demo</button> : null}
+                                        {item.demo == 1 ? <button className="handleChildClickDemo" onClick={(e) => handleChildClickDemo(e, item.game_code, item.provider_code)}>Demo</button> : null}
                                     </CardHeader>
                                     <CardBody>
                                         <CardTitle tag="h5">{item.game_name}</CardTitle>
@@ -183,6 +229,22 @@ function GameProvider() {
             </Container>
         </>
     );
+}
+
+const VideoModal = (props) => {
+    return <div className="demoBTIframeModel" style={{position: "fixed", top: 0, bottom: 0, left: 0, right: 0, backgroundColor: "rgba(0,0,0,0.5)"}}>
+        {/*<span class="demoModelCloseBT">X</span>*/}
+        <BsXCircleFill className="demoModelCloseBT" />
+        <iframe
+            title={props.src}
+            allowFullScreen
+            frameBorder="0"
+            height="100%"
+            src={props.src}
+            width="100%"
+            className="demoBTIframe"
+        />
+    </div>
 }
 
 export default GameProvider;

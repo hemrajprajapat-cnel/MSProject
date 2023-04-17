@@ -6,6 +6,7 @@ import MyPagination from 'components/Pagination/MyPagination.js'
 import GameDetail from "components/Gamedetail/Gamedetails";
 import "../../components/Loader/loader.css";
 import $ from 'jquery';
+import { BsXCircleFill } from "react-icons/bs";
 import "./css/slot.css";
 import {
   Nav,
@@ -19,9 +20,10 @@ import {
   CardSubtitle,
   Container,
 } from "reactstrap";
-import zIndex from "@mui/material/styles/zIndex";
 
 function Slots() {
+  const [path, setpathname] = useState(window.location.pathname);
+
   // For Game Details Page
   const [gamecode, setGameCode] = useState('');
   const [datalist, setDataList] = useState('');
@@ -49,6 +51,10 @@ function Slots() {
   const [theme, settheme] = useState('');
   const [volatility, setvolatility] = useState('');
 
+  const [shownIframeModel, setShownIframeModel] = useState(false);
+  const [modelIframeURL, setModelIframeURL] = useState("");
+  const [foundLoader, setFoundLoader] = React.useState(false);
+
   // function for open filter list
   const OpenfilterList = () => {
     let list = document.getElementById("filter_section");
@@ -64,11 +70,11 @@ function Slots() {
   };
 
   const getGameList = () => {
-    fetch(`${CONSTANT.BaseUrl}category/SLOT?sortBy=${sortBy}&provider=${provider}&game_type=${game_type}&currency=${currency}&feature=${feature}&theme=${theme}&volatility=${volatility}&page=${current_page}`, {
+    fetch(`${CONSTANT.BaseUrl}category${path}?sortBy=${sortBy}&provider=${provider}&game_type=${game_type}&currency=${currency}&feature=${feature}&theme=${theme}&volatility=${volatility}&page=${current_page}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json", 
       },
     })
       .then((res) => res.json())
@@ -88,73 +94,73 @@ function Slots() {
         if (json.filter_list.provider == "") {
           setprovider("");
         }
-        else{   
-          $(".provider").removeClass("active");       
+        else {
+          $(".provider").removeClass("active");
           for (let i = 0; i < json.filter_list.provider.length; i++) {
-            if(json.filter_list.provider[i] == provider){             
+            if (json.filter_list.provider[i] == provider) {
               $(".provider" + i).addClass("active");
-            }             
-          } 
+            }
+          }
         }
 
         if (json.filter_list.game_type == "") {
           setgame_type("");
         }
-        else{   
-          $(".game_type").removeClass("active");       
+        else {
+          $(".game_type").removeClass("active");
           for (let i = 0; i < json.filter_list.game_type.length; i++) {
-            if(json.filter_list.game_type[i] == game_type){             
+            if (json.filter_list.game_type[i] == game_type) {
               $(".game_type" + i).addClass("active");
-            }             
-          } 
+            }
+          }
         }
 
         if (json.filter_list.currency == "") {
           setcurrency("");
         }
-        else{   
-          $(".currency").removeClass("active");       
+        else {
+          $(".currency").removeClass("active");
           for (let i = 0; i < json.filter_list.currency.length; i++) {
-            if(json.filter_list.currency[i] == currency){             
+            if (json.filter_list.currency[i] == currency) {
               $(".currency" + i).addClass("active");
-            }             
-          } 
+            }
+          }
         }
 
         if (json.filter_list.feature == "") {
           setfeature("");
         }
-        else{   
-          $(".feature").removeClass("active");       
+        else {
+          $(".feature").removeClass("active");
           for (let i = 0; i < json.filter_list.feature.length; i++) {
-            if(json.filter_list.feature[i] == feature){             
+            if (json.filter_list.feature[i] == feature) {
               $(".feature" + i).addClass("active");
-            }             
-          } 
+            }
+          }
         }
 
         if (json.filter_list.theme == "") {
           settheme("");
         }
-        else{   
-          $(".theme").removeClass("active");       
+        else {
+          $(".theme").removeClass("active");
           for (let i = 0; i < json.filter_list.theme.length; i++) {
-            if(json.filter_list.theme[i] == theme){             
+            if (json.filter_list.theme[i] == theme) {
               $(".theme" + i).addClass("active");
-            }             
-          } 
+            }
+          }
         }
 
         if (json.filter_list.volatility == "") {
           setvolatility("");
         }
-        else{   
-          $(".volatility").removeClass("active");       
+        else {
+          $(".volatility").removeClass("active");
           for (let i = 0; i < json.filter_list.volatility.length; i++) {
-            if(json.filter_list.volatility[i] == volatility){             
+            if (json.filter_list.volatility[i] == volatility) {
               $(".volatility" + i).addClass("volatility");
-            }             
-          } 
+            }
+          }
         }
 
       })
@@ -197,7 +203,7 @@ function Slots() {
     }
   }
 
-  async function slotFilter(value, filternumber, key)  {
+  async function slotFilter(value, filternumber, key) {
     setcurrent_page(1);
     $(".reactPaginate > li").removeClass("selected");
     $(".reactPaginate > li:nth-child(2)").addClass("selected");
@@ -242,20 +248,24 @@ function Slots() {
   }
 
   // OpenGameDetails
-  function OpenGameDetail(gameCode) {
-    closeFilterList();
-    var gamecode = gameCode;
-    setGameCode(gamecode);
+  function OpenGameDetail(event, gameCode) {
+    event.preventDefault();
 
-    for (let i = 0; i < slotGamelist.length; i++) {
-      if (gamecode == slotGamelist[i].game_code) {
-        setDataList(slotGamelist[i]);
-      }
-    };
+    if (event.currentTarget.className === "slote_card card" && event.target.className !== "handleChildClickDemo") {
+      closeFilterList();
+      var gamecode = gameCode;
+      setGameCode(gamecode);
 
-    let list = document.getElementById("game-detail");
-    list.classList.remove("open-detail-list");
-    $('.page-header').hide();
+      for (let i = 0; i < slotGamelist.length; i++) {
+        if (gamecode == slotGamelist[i].game_code) {
+          setDataList(slotGamelist[i]);
+        }
+      };
+
+      let list = document.getElementById("game-detail");
+      list.classList.remove("open-detail-list");
+      $('.page-header').hide();
+    }
   };
 
   // For ShortBy Button
@@ -266,13 +276,44 @@ function Slots() {
     });
   });
 
+  function handleChildClickDemo(event, gameCode, providerCode) {
+
+    setFoundLoader(true);
+    console.log(gameCode);
+    console.log(providerCode);
+    fetch(`${CONSTANT.BaseUrl}get-demo-url?provider_code=${providerCode}&game_code=${gameCode}`, {
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.url !== "") {
+          setTimeout(function () {
+            setFoundLoader(false);
+          }, 3000);
+
+          setModelIframeURL(json.url);
+          setShownIframeModel(!shownIframeModel);
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  };
+
+  $('.demoModelCloseBT').click(function () {
+    setModelIframeURL("");
+    setShownIframeModel(!shownIframeModel);
+  });
+
   return (
     <>
       <div className={"loading " + loaderdisable}>Loading&#8230;</div>
       <GameDetail gameCode={gamecode} data={datalist} />
       <Navbar />
+      <Header />
       <div className="wrapper">
-        <Header />
+        {foundLoader ? <div class="loader"></div> : null}
+        {shownIframeModel ? <VideoModal src={modelIframeURL} /> : null}
         <div className="main main_slot">
           <div className="container-fluid">
             <Row className="justify-content-center flex-wrap slot_tabs">
@@ -376,13 +417,13 @@ function Slots() {
                 slotGamelist.map((item) => {
                   return (
                     <Col id="unic_card_hwe" className="hwe_each_card_adjust">
-                      <Card className="slote_card" onClick={(e) => OpenGameDetail(item.game_code)}>
+                      <Card className="slote_card" onClick={(e) => OpenGameDetail(e, item.game_code)}>
                         <CardHeader>
                           <img
                             alt="Image Not Found"
                             src={item.game_img ? CONSTANT.ImageUrl + item.game_img : require("../../assets/img/No_Image_Available.jpg")}
                           />
-                          {item.demo == 1 ? <button>Demo</button> : null}
+                          {item.demo == 1 ? <button className="handleChildClickDemo" onClick={(e) => handleChildClickDemo(e, item.game_code, item.provider_code)}>Demo</button> : null}
                         </CardHeader>
                         <CardBody>
                           <CardTitle tag="h5">{item.game_name}</CardTitle>
@@ -419,6 +460,22 @@ function Slots() {
 
     </>
   );
+}
+
+const VideoModal = (props) => {
+  return <div className="demoBTIframeModel" style={{ position: "fixed", top: 0, bottom: 0, left: 0, right: 0, backgroundColor: "rgba(0,0,0,0.5)" }}>
+    {/*<span class="demoModelCloseBT">X</span>*/}
+    <BsXCircleFill className="demoModelCloseBT" />
+    <iframe
+      title={props.src}
+      allowFullScreen
+      frameBorder="0"
+      height="100%"
+      src={props.src}
+      width="100%"
+      className="demoBTIframe"
+    />
+  </div>
 }
 
 export default Slots;
